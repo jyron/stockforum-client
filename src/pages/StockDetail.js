@@ -12,7 +12,7 @@ import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
 
 const StockDetail = () => {
-  const { symbol } = useParams(); // Changed from id to symbol
+  const { symbol } = useParams();
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
 
@@ -23,9 +23,7 @@ const StockDetail = () => {
 
   const fetchStock = async () => {
     try {
-      // Get the stock by symbol
       const result = await getStockBySymbol(symbol);
-
       if (result.success) {
         setStock(result.data);
       } else {
@@ -37,19 +35,12 @@ const StockDetail = () => {
     }
   };
 
-  const fetchComments = async () => {
-    // Only proceed if we have a stock with an ID
-    if (!stock || !stock._id) {
-      return;
-    }
+  const fetchComments = async (stockId) => {
+    if (!stockId) return;
 
     try {
-      // Always use the stock's database ID for backend interactions
-      const result = await getStockComments(stock._id);
-
+      const result = await getStockComments(stockId);
       if (result.success) {
-        // The backend already returns comments organized with nested replies
-        // Just sort the top-level comments by date (newest first)
         const sortedComments = result.data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
@@ -65,7 +56,9 @@ const StockDetail = () => {
   const loadData = async () => {
     setLoading(true);
     await fetchStock();
-    await fetchComments();
+    if (stock?._id) {
+      await fetchComments(stock._id);
+    }
     setLoading(false);
   };
 
@@ -75,10 +68,10 @@ const StockDetail = () => {
 
   // Refresh comments when stock changes
   useEffect(() => {
-    if (stock && stock._id) {
-      fetchComments();
+    if (stock?._id) {
+      fetchComments(stock._id);
     }
-  }, [stock]);
+  }, [stock?._id]);
 
   const handleLike = async () => {
     if (!isAuthenticated()) {
@@ -238,7 +231,10 @@ const StockDetail = () => {
         <h2>Comments</h2>
 
         {stock && stock._id ? (
-          <CommentForm stockId={stock._id} onSubmit={fetchComments} />
+          <CommentForm
+            stockId={stock._id}
+            onSubmit={() => fetchComments(stock._id)}
+          />
         ) : (
           <div className="alert alert-info">Loading comment form...</div>
         )}
@@ -251,7 +247,7 @@ const StockDetail = () => {
               key={comment._id}
               comment={comment}
               stockId={stock._id}
-              onUpdate={fetchComments}
+              onUpdate={() => fetchComments(stock._id)}
             />
           ))
         )}
