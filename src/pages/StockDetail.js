@@ -62,9 +62,13 @@ const StockDetail = () => {
     setLoading(false);
   };
 
+  // Load initial data when symbol changes
   useEffect(() => {
-    loadData();
-  }, [symbol]);
+    const loadInitialData = async () => {
+      await loadData();
+    };
+    loadInitialData();
+  }, [symbol]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Refresh comments when stock changes
   useEffect(() => {
