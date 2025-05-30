@@ -51,9 +51,7 @@ const Home = () => {
     <div className="home-container">
       <header className="main-header">
         <h1>stock forum | discussions</h1>
-        <p className="tagline">
-          share insights and discuss stocks with the community
-        </p>
+        <p className="tagline">discuss stocks with the community</p>
       </header>
 
       <div className="search-container">

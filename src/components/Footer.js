@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="container">
-        <p>StockForum &copy; {new Date().getFullYear()}</p>
+        <p>StockForum.io &copy; {new Date().getFullYear()}</p>
       </div>
     </footer>
   );

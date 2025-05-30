@@ -15,7 +15,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          StockForum
+          StockForum.io
         </Link>
         <div className="navbar-menu">
           <Link to="/">Home</Link>
