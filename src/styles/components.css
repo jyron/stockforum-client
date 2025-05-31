@@ -1,0 +1,33 @@
+/* Navbar Logo Styles */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar-logo-img {
+  height: 40px;
+  width: auto;
+  margin-right: 10px;
+}
+
+/* Home Page Header Logo Styles */
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-logo {
+  height: 60px;
+  width: auto;
+}
+
+.header-content h1 {
+  margin: 0;
+}
+
+.header-content .tagline {
+  margin: 5px 0 0 0;
+}

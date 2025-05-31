@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getAllStocks } from "../services/stockService";
 import StockTable from "../components/StockTable";
 import "../styles/Craigslist.css";
+import "../styles/components.css";
 
 const Home = () => {
   const [stocks, setStocks] = useState([]);
@@ -50,8 +51,17 @@ const Home = () => {
   return (
     <div className="home-container">
       <header className="main-header">
-        <h1>stock forum | discussions</h1>
-        <p className="tagline">discuss stocks with the community</p>
+        <div className="header-content">
+          <img
+            src="/logo192.png"
+            alt="StockForum Logo"
+            className="header-logo"
+          />
+          <div>
+            <h1>stock forum | discussions</h1>
+            <p className="tagline">discuss stocks with the community</p>
+          </div>
+        </div>
       </header>
 
       <div className="search-container">

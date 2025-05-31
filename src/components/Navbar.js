@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import "../styles/components.css";
 
 const Navbar = () => {
   const { logout, isAuthenticated } = useAuth();
@@ -15,7 +16,12 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          StockForum.io
+          <img
+            src="/logo192.png"
+            alt="StockForum Logo"
+            className="navbar-logo-img"
+          />
+          <span>StockForum.io</span>
         </Link>
         <div className="navbar-menu">
           <Link to="/">Home</Link>
