@@ -24,22 +24,15 @@ import { getAllStocks } from "./services/stockService";
 function App() {
   const { loading: authLoading } = useAuth();
   const [stocks, setStocks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const fetchStocks = async () => {
     try {
-      setLoading(true);
       const result = await getAllStocks();
       if (result.success) {
         setStocks(result.data);
-      } else {
-        setError(result.error || "Failed to fetch stocks");
       }
     } catch (err) {
-      setError("An error occurred while fetching stocks");
-    } finally {
-      setLoading(false);
+      console.error("An error occurred while fetching stocks:", err);
     }
   };
 
