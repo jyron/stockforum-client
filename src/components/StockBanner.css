@@ -1,0 +1,64 @@
+.stock-banner {
+  width: 100%;
+  background-color: #f0f0f0;
+  color: #000000;
+  padding: 8px 0;
+  overflow: hidden;
+  position: relative;
+  border-bottom: 1px solid #ccc;
+}
+
+.stock-banner-scroll {
+  display: flex;
+  animation: scroll 30s linear infinite;
+  white-space: nowrap;
+}
+
+.stock-banner-scroll:hover {
+  animation-play-state: paused;
+}
+
+.stock-banner-item {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  text-decoration: none;
+  color: #000000;
+  border-right: 1px solid #ccc;
+}
+
+.stock-banner-item:hover {
+  background-color: #e0e0e0;
+  text-decoration: none;
+}
+
+.stock-symbol {
+  font-weight: bold;
+  margin-right: 10px;
+  color: #0000ff;
+}
+
+.stock-price {
+  margin-right: 10px;
+}
+
+.stock-change {
+  font-weight: 500;
+}
+
+.stock-change.positive {
+  color: #006600;
+}
+
+.stock-change.negative {
+  color: #cc0000;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
