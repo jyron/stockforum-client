@@ -10,8 +10,9 @@
 
 .stock-banner-scroll {
   display: flex;
-  animation: scroll 30s linear infinite;
+  animation: scroll 1500s linear infinite;
   white-space: nowrap;
+  width: max-content;
 }
 
 .stock-banner-scroll:hover {
@@ -56,9 +57,9 @@
 
 @keyframes scroll {
   0% {
-    transform: translateX(100%);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
