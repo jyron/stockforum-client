@@ -165,7 +165,7 @@ const StockTable = ({ stocks, onUpdate }) => {
               <>
                 <Link to={`/stocks/${stock.symbol}`}>
                   {stock.commentCount}{" "}
-                  {stock.commentCount === 1 ? "reply" : "comments"}
+                  {stock.commentCount === 1 ? "comment" : "comments"}
                 </Link>
                 {" - "}
                 <span style={{ color: "#666" }}>{getLastActivity(stock)}</span>
