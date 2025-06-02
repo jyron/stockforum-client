@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { likeStock, dislikeStock } from "../services/stockService";
 
 const StockTable = ({ stocks, onUpdate }) => {
+  const { user, isAuthenticated } = useAuth();
+
   // Helper function to format the last activity
   const getLastActivity = (stock) => {
     if (stock.lastComment) {
@@ -19,16 +23,87 @@ const StockTable = ({ stocks, onUpdate }) => {
     return "no comments";
   };
 
+  // Helper function to check if user has liked/disliked a stock
+  const hasUserLiked = (stock) => {
+    if (!stock.likedBy && !stock.likedByAnonymous) return false;
+
+    // For authenticated users, check the likedBy array
+    if (user && stock.likedBy) {
+      return stock.likedBy.some(
+        (id) =>
+          id === user.id ||
+          id === user._id ||
+          id.toString() === user.id ||
+          id.toString() === user._id
+      );
+    }
+
+    // For anonymous users, we can't reliably check client-side
+    // The server will handle duplicate prevention
+    return false;
+  };
+
+  const hasUserDisliked = (stock) => {
+    if (!stock.dislikedBy && !stock.dislikedByAnonymous) return false;
+
+    // For authenticated users, check the dislikedBy array
+    if (user && stock.dislikedBy) {
+      return stock.dislikedBy.some(
+        (id) =>
+          id === user.id ||
+          id === user._id ||
+          id.toString() === user.id ||
+          id.toString() === user._id
+      );
+    }
+
+    // For anonymous users, we can't reliably check client-side
+    // The server will handle duplicate prevention
+    return false;
+  };
+
+  // Handle like/dislike actions
+  const handleLike = async (stock) => {
+    try {
+      const result = await likeStock(stock._id);
+      if (result.success && onUpdate) {
+        onUpdate(); // Refresh the stocks list
+      } else {
+        console.error("Error liking stock:", result.error);
+        if (result.error && !result.error.includes("already liked")) {
+          alert(result.error);
+        }
+      }
+    } catch (error) {
+      console.error("Error liking stock:", error);
+    }
+  };
+
+  const handleDislike = async (stock) => {
+    try {
+      const result = await dislikeStock(stock._id);
+      if (result.success && onUpdate) {
+        onUpdate(); // Refresh the stocks list
+      } else {
+        console.error("Error disliking stock:", result.error);
+        if (result.error && !result.error.includes("already disliked")) {
+          alert(result.error);
+        }
+      }
+    } catch (error) {
+      console.error("Error disliking stock:", error);
+    }
+  };
+
   return (
     <div className="stock-table-container">
-      <div
-        style={{
-          padding: "5px 0",
-          borderBottom: "1px solid #ccc",
-          marginBottom: "5px",
-        }}
-      >
-        <strong>Stocks</strong>
+      <div className="table-header">
+        <div className="col-symbol">Symbol</div>
+        <div className="col-name">Name</div>
+        <div className="col-price">Price</div>
+        <div className="col-change">Change</div>
+        <div className="col-stats">Stats</div>
+        <div className="conversation-info">Discussion</div>
       </div>
 
       {stocks.map((stock) => (
@@ -59,6 +134,32 @@ const StockTable = ({ stocks, onUpdate }) => {
                   ).toFixed(2)}%`
                 : "N/A"}
             </span>
+          </div>
+
+          <div className="col-stats">
+            <div className="stats-container">
+              <div className="stat-item">💬 {stock.commentCount || 0}</div>
+              <div className="vote-buttons">
+                <button
+                  className={`vote-btn ${
+                    hasUserLiked(stock) ? "active liked" : ""
+                  }`}
+                  onClick={() => handleLike(stock)}
+                  title="Like this stock"
+                >
+                  👍 {stock.likes || 0}
+                </button>
+                <button
+                  className={`vote-btn ${
+                    hasUserDisliked(stock) ? "active disliked" : ""
+                  }`}
+                  onClick={() => handleDislike(stock)}
+                  title="Dislike this stock"
+                >
+                  👎 {stock.dislikes || 0}
+                </button>
+              </div>
+            </div>
           </div>
 
           <div className="conversation-info">

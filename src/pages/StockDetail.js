@@ -78,11 +78,6 @@ const StockDetail = () => {
   }, [stock?._id]);
 
   const handleLike = async () => {
-    if (!isAuthenticated()) {
-      alert("Please login to like stocks");
-      return;
-    }
-
     // Only use the stock's ID for backend interactions
     if (!stock || !stock._id) {
       setError("Cannot like this stock right now");
@@ -96,27 +91,15 @@ const StockDetail = () => {
         ...prevStock,
         likes: result.data.likes,
         dislikes: result.data.dislikes,
-        likedBy: result.data.likedBy,
-        dislikedBy: result.data.dislikedBy,
       }));
+      // Refresh the full stock data to get updated like arrays
+      await fetchStock();
     } else {
-      if (
-        result.error === "Unauthorized" ||
-        result.error?.includes("not authorized")
-      ) {
-        setError("Please sign in to like stocks and join the community!");
-      } else {
-        setError(result.error || "Failed to like stock");
-      }
+      setError(result.error || "Failed to like stock");
     }
   };
 
   const handleDislike = async () => {
-    if (!isAuthenticated()) {
-      alert("Please login to dislike stocks");
-      return;
-    }
-
     // Only use the stock's ID for backend interactions
     if (!stock || !stock._id) {
       setError("Cannot dislike this stock right now");
@@ -130,18 +113,11 @@ const StockDetail = () => {
         ...prevStock,
         likes: result.data.likes,
         dislikes: result.data.dislikes,
-        likedBy: result.data.likedBy,
-        dislikedBy: result.data.dislikedBy,
       }));
+      // Refresh the full stock data to get updated like arrays
+      await fetchStock();
     } else {
-      if (
-        result.error === "Unauthorized" ||
-        result.error?.includes("not authorized")
-      ) {
-        setError("Please sign in to dislike stocks and join the community!");
-      } else {
-        setError(result.error || "Failed to dislike stock");
-      }
+      setError(result.error || "Failed to dislike stock");
     }
   };
 
@@ -163,8 +139,48 @@ const StockDetail = () => {
     }
   };
 
-  const isLiked = user && stock?.likedBy?.includes(user.id);
-  const isDisliked = user && stock?.dislikedBy?.includes(user.id);
+  // Helper function to check if user has liked/disliked a stock
+  const hasUserLiked = () => {
+    if (!stock || (!stock.likedBy && !stock.likedByAnonymous)) return false;
+
+    // For authenticated users, check the likedBy array
+    if (user && stock.likedBy) {
+      return stock.likedBy.some(
+        (id) =>
+          id === user.id ||
+          id === user._id ||
+          id.toString() === user.id ||
+          id.toString() === user._id
+      );
+    }
+
+    // For anonymous users, we can't reliably check client-side
+    // The server will handle duplicate prevention
+    return false;
+  };
+
+  const hasUserDisliked = () => {
+    if (!stock || (!stock.dislikedBy && !stock.dislikedByAnonymous))
+      return false;
+
+    // For authenticated users, check the dislikedBy array
+    if (user && stock.dislikedBy) {
+      return stock.dislikedBy.some(
+        (id) =>
+          id === user.id ||
+          id === user._id ||
+          id.toString() === user.id ||
+          id.toString() === user._id
+      );
+    }
+
+    // For anonymous users, we can't reliably check client-side
+    // The server will handle duplicate prevention
+    return false;
+  };
+
+  const isLiked = hasUserLiked();
+  const isDisliked = hasUserDisliked();
   const isAuthor = user && stock?.createdBy?._id === user.id;
 
   if (loading) {

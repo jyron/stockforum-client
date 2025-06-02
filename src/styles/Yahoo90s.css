@@ -302,29 +302,59 @@ a:hover {
 }
 
 .vote-btn {
-  background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+  padding: 3px 6px;
   border: 1px solid var(--border-color);
-  color: var(--text-color);
-  padding: 4px 8px;
-  margin: 0 5px;
+  background: linear-gradient(to bottom, #ffffff, #f0f0f0);
   cursor: pointer;
   border-radius: 3px;
+  font-size: 11px;
+  min-width: 35px;
+  text-align: center;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.vote-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.vote-btn:hover::before {
+  left: 100%;
 }
 
 .vote-btn:hover {
   background: linear-gradient(to bottom, #f0f0f0, #e6e6e6);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .vote-btn.active.liked {
   background: linear-gradient(to bottom, #e6ffe6, #ccffcc);
   border-color: var(--success-color);
   color: var(--success-color);
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(0, 128, 0, 0.3);
 }
 
 .vote-btn.active.disliked {
   background: linear-gradient(to bottom, #ffe6e6, #ffcccc);
   border-color: var(--error-color);
   color: var(--error-color);
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(204, 0, 0, 0.3);
 }
 
 /* Recent Comments in Stock Card */
@@ -384,18 +414,47 @@ a:hover {
 
 .table-header {
   display: grid;
-  grid-template-columns: 80px 2fr 1fr 1fr 1fr 2fr 1fr;
+  grid-template-columns: 80px 2fr 100px 80px 120px 2fr;
   gap: 10px;
   padding: 12px;
   background-color: var(--table-header);
   border-bottom: 2px solid var(--border-color);
   font-weight: bold;
   color: var(--primary-color);
+  font-size: 0.9em;
+  align-items: center;
+}
+
+.table-header > div {
+  text-align: center;
+  font-weight: bold;
+}
+
+.table-header .col-symbol,
+.table-header .col-name {
+  text-align: left;
+}
+
+.table-header .col-price,
+.table-header .col-change {
+  text-align: right;
+}
+
+.table-header .col-stats {
+  text-align: center;
+}
+
+.table-header .conversation-info {
+  text-align: left;
+}
+
+.col-conversation {
+  padding-left: 10px;
 }
 
 .table-row {
   display: grid;
-  grid-template-columns: 80px 2fr 1fr 1fr 1fr 2fr 1fr;
+  grid-template-columns: 80px 2fr 100px 80px 120px 2fr;
   gap: 10px;
   padding: 12px;
   border-bottom: 1px solid var(--border-color);
@@ -417,19 +476,41 @@ a:hover {
 
 .col-price {
   font-weight: bold;
+  text-align: right;
+}
+
+.col-change {
+  text-align: right;
+}
+
+.conversation-info {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.conversation-info a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.conversation-info a:hover {
+  text-decoration: underline;
 }
 
 .stats-container {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 8px;
   align-items: center;
+  justify-content: center;
 }
 
 .stat-item {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 0.9em;
+  font-size: 0.85em;
+  color: #666;
 }
 
 .action-buttons {
@@ -441,51 +522,8 @@ a:hover {
 
 .vote-buttons {
   display: flex;
-  gap: 8px;
-}
-
-.vote-btn {
-  padding: 4px 8px;
-  border: 1px solid var(--border-color);
-  background: linear-gradient(to bottom, #ffffff, #f0f0f0);
-  cursor: pointer;
-  border-radius: 3px;
-}
-
-.vote-btn:hover {
-  background: linear-gradient(to bottom, #f0f0f0, #e6e6e6);
-}
-
-.vote-btn.active.liked {
-  background: linear-gradient(to bottom, #e6ffe6, #ccffcc);
-  border-color: var(--success-color);
-  color: var(--success-color);
-}
-
-.vote-btn.active.disliked {
-  background: linear-gradient(to bottom, #ffe6e6, #ffcccc);
-  border-color: var(--error-color);
-  color: var(--error-color);
-}
-
-.comment-preview {
-  background-color: var(--table-row-even);
-  padding: 8px;
-  border: 1px solid var(--border-color);
-  border-radius: 3px;
-}
-
-.comment-preview .comment-author {
-  font-weight: bold;
-  color: var(--primary-color);
-  font-size: 0.9em;
-  margin-bottom: 4px;
-}
-
-.comment-preview .comment-content {
-  font-size: 0.9em;
-  color: var(--text-color);
-  line-height: 1.4;
+  gap: 4px;
+  justify-content: center;
 }
 
 .no-comment {
@@ -498,18 +536,18 @@ a:hover {
 @media (max-width: 1200px) {
   .table-header,
   .table-row {
-    grid-template-columns: 80px 1.5fr 1fr 1fr 1fr 1.5fr 1fr;
+    grid-template-columns: 80px 1.5fr 90px 70px 110px 1.5fr;
   }
 }
 
 @media (max-width: 992px) {
   .table-header,
   .table-row {
-    grid-template-columns: 80px 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 80px 1fr 80px 100px 1fr;
   }
 
-  .col-name,
-  .col-comment {
+  .table-header .col-name,
+  .col-name {
     display: none;
   }
 }
@@ -517,11 +555,11 @@ a:hover {
 @media (max-width: 768px) {
   .table-header,
   .table-row {
-    grid-template-columns: 80px 1fr 1fr 1fr 1fr;
+    grid-template-columns: 80px 1fr 80px 1fr;
   }
 
-  .col-stats,
-  .col-actions {
+  .table-header .col-change,
+  .col-change {
     display: none;
   }
 }
