@@ -138,7 +138,6 @@ const StockTable = ({ stocks, onUpdate }) => {
 
           <div className="col-stats">
             <div className="stats-container">
-              <div className="stat-item">💬 {stock.commentCount || 0}</div>
               <div className="vote-buttons">
                 <button
                   className={`vote-btn ${
