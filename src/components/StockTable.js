@@ -160,7 +160,6 @@ const StockTable = ({ stocks, onUpdate }) => {
               </div>
             </div>
           </div>
-
           <div className="conversation-info">
             {stock.commentCount > 0 ? (
               <>
