@@ -223,12 +223,6 @@ const StockDetail = () => {
             👎 {stock.dislikes || 0}
           </button>
         </div>
-
-        {isAuthor && (
-          <button className="btn btn-danger" onClick={handleDelete}>
-            Delete Stock
-          </button>
-        )}
       </div>
 
       <div className="comments-section">
