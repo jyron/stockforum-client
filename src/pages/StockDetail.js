@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   likeStock,
   dislikeStock,
-  deleteStock,
   getStockBySymbol,
 } from "../services/stockService";
 import { getStockComments } from "../services/commentService";
@@ -13,7 +12,6 @@ import CommentForm from "../components/CommentForm";
 
 const StockDetail = () => {
   const { symbol } = useParams();
-  const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
 
   const [stock, setStock] = useState(null);
