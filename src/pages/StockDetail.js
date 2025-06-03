@@ -145,27 +145,8 @@ const StockDetail = () => {
     }
   };
 
-  const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete this stock?")) {
-      // Only use the stock's ID for backend interactions
-      if (!stock || !stock._id) {
-        setError("Cannot delete this stock right now");
-        return;
-      }
-
-      const result = await deleteStock(stock._id);
-
-      if (result.success) {
-        navigate("/");
-      } else {
-        alert(result.error || "Failed to delete stock");
-      }
-    }
-  };
-
   const isLiked = user && stock?.likedBy?.includes(user.id);
   const isDisliked = user && stock?.dislikedBy?.includes(user.id);
-  const isAuthor = user && stock?.createdBy?._id === user.id;
 
   if (loading) {
     return <div className="loading">Loading stock details...</div>;
