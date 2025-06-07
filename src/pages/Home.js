@@ -5,16 +5,33 @@ import "../styles/components.css";
 
 const Home = ({ stocks, onUpdate }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeTab, setActiveTab] = useState("all"); // "all", "gainers", or "losers"
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredStocks = stocks.filter(
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+  };
+
+  // First filter by search term
+  let filteredStocks = stocks.filter(
     (stock) =>
       stock.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
       stock.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Then filter by tab selection
+  if (activeTab === "gainers") {
+    filteredStocks = filteredStocks
+      .filter((stock) => stock.percentChange > 0)
+      .sort((a, b) => b.percentChange - a.percentChange);
+  } else if (activeTab === "losers") {
+    filteredStocks = filteredStocks
+      .filter((stock) => stock.percentChange < 0)
+      .sort((a, b) => a.percentChange - b.percentChange);
+  }
 
   return (
     <div className="home-container">
@@ -40,6 +57,27 @@ const Home = ({ stocks, onUpdate }) => {
           value={searchTerm}
           onChange={handleSearch}
         />
+      </div>
+
+      <div className="tabs-container">
+        <button
+          className={`tab-button ${activeTab === "all" ? "active" : ""}`}
+          onClick={() => handleTabChange("all")}
+        >
+          All Stocks
+        </button>
+        <button
+          className={`tab-button ${activeTab === "gainers" ? "active" : ""}`}
+          onClick={() => handleTabChange("gainers")}
+        >
+          Top Gainers
+        </button>
+        <button
+          className={`tab-button ${activeTab === "losers" ? "active" : ""}`}
+          onClick={() => handleTabChange("losers")}
+        >
+          Top Losers
+        </button>
       </div>
 
       {filteredStocks.length === 0 ? (
