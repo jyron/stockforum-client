@@ -9,6 +9,7 @@ import { getStockComments } from "../services/commentService";
 import { useAuth } from "../context/AuthContext";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
+import StockChart from "../components/StockChart";
 
 const StockDetail = () => {
   const { symbol } = useParams();
@@ -164,6 +165,8 @@ const StockDetail = () => {
         {stock.symbol} - {stock.name}
       </h1>
       <p className="description">{stock.description}</p>
+
+      <StockChart symbol={stock.symbol} />
 
       <div className="price-info">
         <p className="current-price">
