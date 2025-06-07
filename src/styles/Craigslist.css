@@ -166,7 +166,7 @@ a:hover {
 }
 
 .col-name {
-  flex: 1;
+  flex: 0.7;
   padding: 0 10px;
   color: #666;
   overflow: hidden;
@@ -180,7 +180,8 @@ a:hover {
 }
 
 .col-change {
-  width: 60px;
+  flex: 0.07;
+
   text-align: right;
   padding: 0 10px;
 }
