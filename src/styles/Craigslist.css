@@ -451,3 +451,34 @@ a:hover {
     width: 150px;
   }
 }
+
+/* Tabs Container */
+.tabs-container {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.tab-button {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  background: #f8f8f8;
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+  transition: all 0.2s ease;
+}
+
+.tab-button:hover {
+  background: #eee;
+  border-color: #999;
+}
+
+.tab-button.active {
+  background: #fff;
+  border-color: #666;
+  color: #333;
+  font-weight: bold;
+}
