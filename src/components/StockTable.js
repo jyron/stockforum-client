@@ -31,6 +31,15 @@ const StockTable = ({ stocks, onUpdate }) => {
         <strong>Stocks</strong>
       </div>
 
+      {/* Header Row */}
+      <div className="table-row">
+        <div className="col-symbol">Symbol</div>
+        <div className="col-name">Name</div>
+        <div className="col-price">Price</div>
+        <div className="col-change">Change</div>
+        <div className="conversation-info">Comments</div>
+      </div>
+
       {stocks.map((stock) => (
         <div key={stock._id} className="table-row">
           <div className="col-symbol">
