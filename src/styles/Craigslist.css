@@ -205,7 +205,8 @@ a:hover {
 
 /* New conversation indicator */
 .conversation-info {
-  margin-left: auto;
+  /* margin-left: auto; */
+  width: 260px;
   padding: 0 10px;
   font-size: 12px;
   color: #666;
