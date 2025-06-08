@@ -1,0 +1,148 @@
+.stock-heatmap {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.stock-heatmap h4 {
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.stock-heatmap .text-muted {
+  color: #6c757d !important;
+  font-size: 0.9rem;
+}
+
+.heatmap-container {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.heatmap-container:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Observable Plot styling overrides */
+.heatmap-container svg {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.heatmap-container .plot-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  fill: #333;
+}
+
+.heatmap-container .plot-subtitle {
+  font-size: 0.9rem;
+  fill: #666;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .stock-heatmap {
+    padding: 16px;
+    margin: 10px 0;
+  }
+
+  .heatmap-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 576px) {
+  .stock-heatmap {
+    padding: 12px;
+  }
+
+  .stock-heatmap h4 {
+    font-size: 1.1rem;
+  }
+
+  .stock-heatmap .text-muted {
+    font-size: 0.8rem;
+  }
+}
+
+/* Loading spinner styling */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Alert styling */
+.alert {
+  border-radius: 8px;
+  border: none;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Heatmap legend styling */
+.stock-heatmap .legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  gap: 20px;
+  font-size: 0.85rem;
+}
+
+.stock-heatmap .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stock-heatmap .legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+}
+
+.legend-positive {
+  background-color: #388e3c;
+}
+
+.legend-negative {
+  background-color: #d32f2f;
+}
+
+.legend-neutral {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+}
+
+/* Tooltip enhancement */
+.heatmap-container [title] {
+  cursor: pointer;
+}
+
+/* Animation for data loading */
+.stock-heatmap.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.stock-heatmap.loaded {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 import StockTable from "../components/StockTable";
+import StockHeatmap from "../components/StockHeatmap";
 import SectorFilter from "../components/SectorFilter";
 import "../styles/Craigslist.css";
 import "../styles/components.css";
 
 const Home = ({ stocks, onUpdate }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeTab, setActiveTab] = useState("all"); // "all", "gainers", or "losers"
+  const [activeFilter, setActiveFilter] = useState("all"); // "all", "gainers", "losers"
   const [selectedSector, setSelectedSector] = useState("");
+  const [viewMode, setViewMode] = useState("table"); // "table" or "heatmap"
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
+  const handleFilterChange = (filter) => {
+    setActiveFilter(filter);
+  };
+
+  const handleViewModeChange = (mode) => {
+    setViewMode(mode);
   };
 
   const handleSectorChange = (sector) => {
@@ -29,12 +35,12 @@ const Home = ({ stocks, onUpdate }) => {
       (!selectedSector || stock.sector === selectedSector)
   );
 
-  // Then filter by tab selection
-  if (activeTab === "gainers") {
+  // Then filter by selection
+  if (activeFilter === "gainers") {
     filteredStocks = filteredStocks
       .filter((stock) => stock.percentChange > 0)
       .sort((a, b) => b.percentChange - a.percentChange);
-  } else if (activeTab === "losers") {
+  } else if (activeFilter === "losers") {
     filteredStocks = filteredStocks
       .filter((stock) => stock.percentChange < 0)
       .sort((a, b) => a.percentChange - b.percentChange);
@@ -70,31 +76,56 @@ const Home = ({ stocks, onUpdate }) => {
         />
       </div>
 
-      <div className="tabs">
-        <button
-          className={`tab ${activeTab === "all" ? "active" : ""}`}
-          onClick={() => handleTabChange("all")}
-        >
-          All Stocks
-        </button>
-        <button
-          className={`tab ${activeTab === "gainers" ? "active" : ""}`}
-          onClick={() => handleTabChange("gainers")}
-        >
-          Top Gainers
-        </button>
-        <button
-          className={`tab ${activeTab === "losers" ? "active" : ""}`}
-          onClick={() => handleTabChange("losers")}
-        >
-          Top Losers
-        </button>
+      <div className="view-controls">
+        {/* View Mode Tabs */}
+        <div className="view-tabs">
+          <button
+            className={`view-tab ${viewMode === "table" ? "active" : ""}`}
+            onClick={() => handleViewModeChange("table")}
+          >
+            📊 Table View
+          </button>
+          <button
+            className={`view-tab ${viewMode === "heatmap" ? "active" : ""}`}
+            onClick={() => handleViewModeChange("heatmap")}
+          >
+            🗂️ Heatmap View
+          </button>
+        </div>
+
+        {/* Filter Tabs */}
+        <div className="filter-tabs">
+          <button
+            className={`filter-tab ${activeFilter === "all" ? "active" : ""}`}
+            onClick={() => handleFilterChange("all")}
+          >
+            All Stocks
+          </button>
+          <button
+            className={`filter-tab ${
+              activeFilter === "gainers" ? "active" : ""
+            }`}
+            onClick={() => handleFilterChange("gainers")}
+          >
+            Top Gainers
+          </button>
+          <button
+            className={`filter-tab ${
+              activeFilter === "losers" ? "active" : ""
+            }`}
+            onClick={() => handleFilterChange("losers")}
+          >
+            Top Losers
+          </button>
+        </div>
       </div>
 
       {filteredStocks.length === 0 ? (
         <div className="no-stocks">
           No stocks found matching your search criteria.
         </div>
+      ) : viewMode === "heatmap" ? (
+        <StockHeatmap stocks={filteredStocks} />
       ) : (
         <StockTable stocks={filteredStocks} onUpdate={onUpdate} />
       )}
