@@ -15,6 +15,7 @@ import "./StockDetail.css";
 const StockDetail = () => {
   const { symbol } = useParams();
   const { user, isAuthenticated } = useAuth();
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   const [stock, setStock] = useState(null);
   const [comments, setComments] = useState([]);
@@ -160,6 +161,12 @@ const StockDetail = () => {
     return <div className="alert alert-danger">Stock not found</div>;
   }
 
+  const truncateDescription = (text, maxLength = 300) => {
+    if (!text) return "";
+    if (text.length <= maxLength) return text;
+    return text.slice(0, maxLength) + "...";
+  };
+
   return (
     <div className="stock-details">
       <div className="stock-header">
@@ -192,11 +199,28 @@ const StockDetail = () => {
                 Market Cap: ${(stock.marketCap / 1000000000).toFixed(2)}B
               </span>
             )}
+            {stock.sector && (
+              <span className="sector">Sector: {stock.sector}</span>
+            )}
           </div>
         </div>
       </div>
 
-      <p className="description">{stock.description}</p>
+      <div className="description-container">
+        <p className="description">
+          {showFullDescription
+            ? stock.description
+            : truncateDescription(stock.description)}
+          {stock.description && stock.description.length > 300 && (
+            <button
+              className="show-more-btn"
+              onClick={() => setShowFullDescription(!showFullDescription)}
+            >
+              {showFullDescription ? "Show Less" : "Show More"}
+            </button>
+          )}
+        </p>
+      </div>
 
       <StockChart symbol={stock.symbol} />
 
