@@ -10,6 +10,7 @@ import { useAuth } from "../context/AuthContext";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
 import StockChart from "../components/StockChart";
+import "./StockDetail.css";
 
 const StockDetail = () => {
   const { symbol } = useParams();
@@ -161,9 +162,40 @@ const StockDetail = () => {
 
   return (
     <div className="stock-details">
-      <h1>
-        {stock.symbol} - {stock.name}
-      </h1>
+      <div className="stock-header">
+        <div className="stock-image-container">
+          {stock.image && (
+            <img
+              src={stock.image}
+              alt={`${stock.name} logo`}
+              className="stock-logo"
+            />
+          )}
+        </div>
+        <div className="stock-title">
+          <h1>
+            {stock.symbol} - {stock.name}
+          </h1>
+          <div className="stock-meta">
+            {stock.website && (
+              <a
+                href={stock.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="website-link"
+              >
+                🌐 Official Website
+              </a>
+            )}
+            {stock.marketCap && (
+              <span className="market-cap">
+                Market Cap: ${(stock.marketCap / 1000000000).toFixed(2)}B
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
       <p className="description">{stock.description}</p>
 
       <StockChart symbol={stock.symbol} />
