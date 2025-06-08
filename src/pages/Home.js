@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import StockTable from "../components/StockTable";
+import SectorFilter from "../components/SectorFilter";
 import "../styles/Craigslist.css";
 import "../styles/components.css";
 
 const Home = ({ stocks, onUpdate }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("all"); // "all", "gainers", or "losers"
+  const [selectedSector, setSelectedSector] = useState("");
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -15,11 +17,16 @@ const Home = ({ stocks, onUpdate }) => {
     setActiveTab(tab);
   };
 
-  // First filter by search term
+  const handleSectorChange = (sector) => {
+    setSelectedSector(sector);
+  };
+
+  // First filter by search term and sector
   let filteredStocks = stocks.filter(
     (stock) =>
-      stock.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      stock.name.toLowerCase().includes(searchTerm.toLowerCase())
+      (stock.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        stock.name.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (!selectedSector || stock.sector === selectedSector)
   );
 
   // Then filter by tab selection
@@ -49,31 +56,35 @@ const Home = ({ stocks, onUpdate }) => {
         </div>
       </header>
 
-      <div className="search-container">
+      <div className="filters-container">
         <input
           type="text"
-          className="search-input"
-          placeholder="AAPL, GOOGL..."
+          placeholder="Search stocks..."
           value={searchTerm}
           onChange={handleSearch}
+          className="search-input"
+        />
+        <SectorFilter
+          selectedSector={selectedSector}
+          onSectorChange={handleSectorChange}
         />
       </div>
 
-      <div className="tabs-container">
+      <div className="tabs">
         <button
-          className={`tab-button ${activeTab === "all" ? "active" : ""}`}
+          className={`tab ${activeTab === "all" ? "active" : ""}`}
           onClick={() => handleTabChange("all")}
         >
           All Stocks
         </button>
         <button
-          className={`tab-button ${activeTab === "gainers" ? "active" : ""}`}
+          className={`tab ${activeTab === "gainers" ? "active" : ""}`}
           onClick={() => handleTabChange("gainers")}
         >
           Top Gainers
         </button>
         <button
-          className={`tab-button ${activeTab === "losers" ? "active" : ""}`}
+          className={`tab ${activeTab === "losers" ? "active" : ""}`}
           onClick={() => handleTabChange("losers")}
         >
           Top Losers
