@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./StockTable.css";
 
 const StockTable = ({ stocks, onUpdate }) => {
   // Helper function to format the last activity
@@ -21,18 +22,12 @@ const StockTable = ({ stocks, onUpdate }) => {
 
   return (
     <div className="stock-table-container">
-      <div
-        style={{
-          padding: "5px 0",
-          borderBottom: "1px solid #ccc",
-          marginBottom: "5px",
-        }}
-      >
+      <div className="stock-table-title">
         <strong>Stocks</strong>
       </div>
 
       {/* Header Row */}
-      <div className="table-row">
+      <div className="table-row table-header">
         <div className="col-symbol">Symbol</div>
         <div className="col-name">Name</div>
         <div className="col-price">Price</div>
@@ -77,15 +72,21 @@ const StockTable = ({ stocks, onUpdate }) => {
                   {stock.commentCount}{" "}
                   {stock.commentCount === 1 ? "reply" : "comments"}
                 </Link>
-                {" - "}
-                <span style={{ color: "#666" }}>{getLastActivity(stock)}</span>
+                <span className="last-activity-info">
+                  {" - "}
+                  {getLastActivity(stock)}
+                </span>
                 {stock.lastComment && (
-                  <>
+                  <span className="last-activity-info">
                     {" - "}
-                    <span style={{ color: "#666", fontSize: "0.9em" }}>
-                      {stock.lastComment.author}: {stock.lastComment.content}
+                    <span className="last-comment-author">
+                      {stock.lastComment.author}
                     </span>
-                  </>
+                    :{" "}
+                    <span className="last-comment-content">
+                      {stock.lastComment.content}
+                    </span>
+                  </span>
                 )}
               </>
             ) : (
