@@ -212,6 +212,23 @@ export const AuthProvider = ({ children }) => {
   // Check if user is authenticated
   const isAuthenticated = () => !!token;
 
+  // Update username
+  const updateUsername = async (username) => {
+    try {
+      const res = await api.put("/api/auth/username", { username });
+      setUser(res.data.user);
+      return {
+        success: true,
+        data: res.data,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error.response?.data?.message || "Failed to update username",
+      };
+    }
+  };
+
   const value = {
     user,
     loading,
@@ -220,6 +237,7 @@ export const AuthProvider = ({ children }) => {
     socialLogin,
     logout,
     isAuthenticated,
+    updateUsername,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

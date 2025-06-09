@@ -1,80 +1,100 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
-  const { register } = useAuth();
+
+  const { register, socialLogin } = useAuth();
   const navigate = useNavigate();
-  
-  const { username, email, password, confirmPassword } = formData;
-  
+
+  const { email, password, confirmPassword } = formData;
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!username || !email || !password || !confirmPassword) {
-      setError('Please enter all fields');
+
+    if (!email || !password || !confirmPassword) {
+      setError("Please enter all fields");
       return;
     }
-    
+
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       return;
     }
-    
+
     if (password.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError("Password must be at least 6 characters");
       return;
     }
-    
+
     setLoading(true);
-    setError('');
-    
+    setError("");
+
+    // Generate a username from email (everything before @)
+    const username = email.split("@")[0];
+
     const result = await register({
       username,
       email,
-      password
+      password,
     });
-    
+
     setLoading(false);
-    
+
     if (result.success) {
-      navigate('/');
+      navigate("/");
     } else {
-      setError(result.error || 'Registration failed');
+      setError(result.error || "Registration failed");
     }
   };
-  
+
+  const handleSocialLogin = async (provider) => {
+    setLoading(true);
+    setError("");
+
+    const result = await socialLogin(provider);
+
+    setLoading(false);
+
+    if (result.success) {
+      navigate("/");
+    } else {
+      setError(result.error || `${provider} login failed`);
+    }
+  };
+
   return (
     <div className="auth-container">
       <h1 className="auth-title">Register</h1>
-      
+
       {error && <div className="alert alert-danger">{error}</div>}
-      
+
+      <div className="social-login-buttons">
+        <button
+          onClick={() => handleSocialLogin("google")}
+          className="btn btn-social btn-google"
+          disabled={loading}
+        >
+          <i className="fab fa-google"></i> Continue with Google
+        </button>
+      </div>
+
+      <div className="divider">
+        <span>or</span>
+      </div>
+
       <form className="form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            value={username}
-            onChange={handleChange}
-            required
-          />
-        </div>
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
@@ -108,15 +128,11 @@ const Register = () => {
             required
           />
         </div>
-        <button 
-          type="submit" 
-          className="btn btn-primary"
-          disabled={loading}
-        >
-          {loading ? 'Registering...' : 'Register'}
+        <button type="submit" className="btn btn-primary" disabled={loading}>
+          {loading ? "Registering..." : "Register with Email"}
         </button>
       </form>
-      
+
       <p className="my-1">
         Already have an account? <Link to="/login">Login</Link>
       </p>
