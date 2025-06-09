@@ -114,6 +114,24 @@ export const AuthProvider = ({ children }) => {
             type: event.data?.type,
           });
 
+          // Get the expected origin from env or default
+          const expectedOrigin =
+            process.env.REACT_APP_API_URL || "http://localhost:5000";
+          const allowedOrigins = [
+            expectedOrigin,
+            expectedOrigin.replace("http://", "https://"),
+            expectedOrigin.replace("https://", "http://"),
+          ];
+
+          // Verify the origin
+          if (!allowedOrigins.includes(event.origin)) {
+            console.log(
+              "Ignoring message from unexpected origin:",
+              event.origin
+            );
+            return;
+          }
+
           // Ignore MetaMask messages
           if (event.data?.target === "metamask-inpage") {
             console.log("Ignoring MetaMask message");
@@ -184,10 +202,6 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", result.token);
       setToken(result.token);
       setUser(result.user);
-
-      // Trigger a page reload to ensure all components update with the new auth state
-      console.log("Reloading page to update auth state");
-      window.location.href = "/";
 
       return {
         success: true,
