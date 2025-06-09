@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import StockTable from "../components/StockTable";
 import StockHeatmap from "../components/StockHeatmap";
 import SectorFilter from "../components/SectorFilter";
+import LoadingBar from "../components/LoadingBar";
 import "../styles/Craigslist.css";
 import "../styles/components.css";
 
-const Home = ({ stocks, onUpdate }) => {
+const Home = ({ stocks, isLoading, onUpdate }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState("all"); // "all", "gainers", "losers"
   const [selectedSector, setSelectedSector] = useState("");
@@ -44,6 +45,14 @@ const Home = ({ stocks, onUpdate }) => {
     filteredStocks = filteredStocks
       .filter((stock) => stock.percentChange < 0)
       .sort((a, b) => a.percentChange - b.percentChange);
+  }
+
+  if (isLoading) {
+    return (
+      <div className="home-container">
+        <LoadingBar />
+      </div>
+    );
   }
 
   return (
@@ -120,11 +129,7 @@ const Home = ({ stocks, onUpdate }) => {
         </div>
       </div>
 
-      {filteredStocks.length === 0 ? (
-        <div className="no-stocks">
-          No stocks found matching your search criteria.
-        </div>
-      ) : viewMode === "heatmap" ? (
+      {filteredStocks.length === 0 ? null : viewMode === "heatmap" ? (
         <StockHeatmap stocks={filteredStocks} />
       ) : (
         <StockTable stocks={filteredStocks} onUpdate={onUpdate} />

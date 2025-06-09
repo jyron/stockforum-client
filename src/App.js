@@ -24,15 +24,19 @@ import { getAllStocks } from "./services/stockService";
 function App() {
   const { loading: authLoading } = useAuth();
   const [stocks, setStocks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchStocks = async () => {
     try {
+      setIsLoading(true);
       const result = await getAllStocks();
       if (result.success) {
         setStocks(result.data);
       }
     } catch (err) {
       console.error("An error occurred while fetching stocks:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -52,7 +56,13 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Home stocks={stocks} onUpdate={fetchStocks} />}
+            element={
+              <Home
+                stocks={stocks}
+                isLoading={isLoading}
+                onUpdate={fetchStocks}
+              />
+            }
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
