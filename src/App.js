@@ -13,6 +13,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import StockDetail from "./pages/StockDetail";
 import Profile from "./pages/Profile";
+import ConversationView from "./pages/ConversationView";
+import NewConversation from "./pages/NewConversation";
 
 import NotFound from "./pages/NotFound";
 
@@ -67,6 +69,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/stocks/:symbol" element={<StockDetail />} />
+          <Route path="/conversation/:id" element={<ConversationView />} />
+          <Route path="/new-conversation" element={<NewConversation />} />
 
           <Route
             path="/profile"
