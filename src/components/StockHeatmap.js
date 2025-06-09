@@ -115,8 +115,6 @@ const StockHeatmap = ({ stocks = null }) => {
     }));
 
     const plot = Plot.plot({
-      title: "Stock Market Heatmap",
-      subtitle: "Box size = Market Cap, Color = Price Change %",
       width: 1000,
       height: 600,
       padding: 40,
@@ -368,8 +366,7 @@ const StockHeatmap = ({ stocks = null }) => {
       {stockData.length > 0 && (
         <div className="mt-3">
           <small className="text-muted">
-            Last updated: {new Date().toLocaleTimeString()} | Showing{" "}
-            {stockData.length} stocks from your database
+            Showing {stockData.length} stocks from your database
           </small>
         </div>
       )}
