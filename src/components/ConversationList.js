@@ -71,7 +71,7 @@ const ConversationList = ({ conversations = [] }) => {
               </p>
               <div className="conversation-meta">
                 <span className="conversation-author">
-                  {conversation.author?.username}
+                  👤 {conversation.author?.username}
                 </span>
                 <span className="conversation-date">
                   {new Date(conversation.createdAt).toLocaleDateString()}

@@ -169,6 +169,21 @@
   color: #586069;
 }
 
+.conversation-author {
+  font-weight: 600;
+  color: #0366d6;
+  background-color: #f1f8ff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.conversation-date {
+  color: #586069;
+}
+
 .conversation-stats {
   display: flex;
   gap: 1rem;
