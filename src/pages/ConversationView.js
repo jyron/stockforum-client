@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import {
   getConversation,
   getConversationComments,
   addComment,
 } from "../services/conversationService";
-import { useAuth } from "../context/AuthContext";
 import AuthModal from "../components/AuthModal";
 import "../styles/components.css";
 
@@ -17,17 +17,14 @@ const ConversationView = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [replyTo, setReplyTo] = useState(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authAction, setAuthAction] = useState("");
 
-  useEffect(() => {
-    fetchConversationAndComments();
-  }, [id]);
-
-  const fetchConversationAndComments = async () => {
+  const fetchConversationAndComments = useCallback(async () => {
     try {
+      setIsLoading(true);
       const [conversationResult, commentsResult] = await Promise.all([
         getConversation(id),
         getConversationComments(id),
@@ -43,12 +40,18 @@ const ConversationView = () => {
 
       setConversation(conversationResult.data);
       setComments(commentsResult.data);
+      setError(null);
     } catch (err) {
-      setError(err.message);
+      setError("Failed to load conversation");
+      console.error(err);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    fetchConversationAndComments();
+  }, [fetchConversationAndComments]);
 
   const handleSubmitComment = async (e) => {
     e.preventDefault();

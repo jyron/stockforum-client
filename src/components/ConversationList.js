@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   likeConversation,
   unlikeConversation,
@@ -9,10 +9,9 @@ import AuthModal from "./AuthModal";
 import "../styles/components.css";
 
 const ConversationList = ({ conversations = [] }) => {
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authAction, setAuthAction] = useState("");
+  const { isAuthenticated } = useAuth();
 
   const handleLike = async (e, conversationId, isLiked) => {
     e.preventDefault();
