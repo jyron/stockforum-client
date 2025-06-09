@@ -8,8 +8,10 @@ import { getAllConversations } from "../services/conversationService";
 import "../styles/Craigslist.css";
 import "../styles/components.css";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Home = ({ stocks, isLoading, onUpdate }) => {
+  const { isAuthenticated } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState("all"); // "all", "gainers", "losers"
   const [selectedSector, setSelectedSector] = useState("");
@@ -177,9 +179,11 @@ const Home = ({ stocks, isLoading, onUpdate }) => {
         <div className="conversations-section">
           <div className="conversations-header">
             <h2>Recent Conversations</h2>
-            <Link to="/new-conversation" className="new-conversation-button">
-              Start New Conversation
-            </Link>
+            {isAuthenticated() && (
+              <Link to="/new-conversation" className="new-conversation-button">
+                Start New Conversation
+              </Link>
+            )}
           </div>
           {error && <div className="error-message">{error}</div>}
           {isLoadingConversations ? (

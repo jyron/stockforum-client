@@ -5,18 +5,22 @@ import {
   getConversationComments,
   addComment,
 } from "../services/conversationService";
+import { useAuth } from "../context/AuthContext";
+import AuthModal from "../components/AuthModal";
 import "../styles/components.css";
 
 const ConversationView = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [conversation, setConversation] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const [isAnonymous, setIsAnonymous] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [replyTo, setReplyTo] = useState(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authAction, setAuthAction] = useState("");
 
   useEffect(() => {
     fetchConversationAndComments();
@@ -48,17 +52,22 @@ const ConversationView = () => {
 
   const handleSubmitComment = async (e) => {
     e.preventDefault();
+
+    if (!isAuthenticated()) {
+      setAuthAction("add a comment");
+      setShowAuthModal(true);
+      return;
+    }
+
     try {
       const result = await addComment(id, {
         content: newComment,
-        isAnonymous,
         parentComment: replyTo,
       });
 
       if (result.success) {
         setComments((prev) => [...prev, result.data]);
         setNewComment("");
-        setIsAnonymous(false);
         setReplyTo(null);
       } else {
         setError(result.error);
@@ -69,7 +78,7 @@ const ConversationView = () => {
   };
 
   const handleBack = () => {
-    navigate(-1); // This will go back to the previous page
+    navigate(-1);
   };
 
   const renderComments = (parentId = null, depth = 0) => {
@@ -84,9 +93,7 @@ const ConversationView = () => {
         style={{ marginLeft: `${depth * 20}px` }}
       >
         <div className="comment-header">
-          <span className="comment-author">
-            {comment.isAnonymous ? "Anonymous" : comment.author?.username}
-          </span>
+          <span className="comment-author">{comment.author?.username}</span>
           <span className="comment-date">
             {new Date(comment.createdAt).toLocaleDateString()}
           </span>
@@ -94,7 +101,14 @@ const ConversationView = () => {
         <p className="comment-content">{comment.content}</p>
         <div className="comment-actions">
           <button
-            onClick={() => setReplyTo(comment._id)}
+            onClick={() => {
+              if (!isAuthenticated()) {
+                setAuthAction("reply to this comment");
+                setShowAuthModal(true);
+                return;
+              }
+              setReplyTo(comment._id);
+            }}
             className="reply-button"
           >
             Reply
@@ -118,9 +132,7 @@ const ConversationView = () => {
         <h1>{conversation.title}</h1>
         <div className="conversation-meta">
           <span className="conversation-author">
-            {conversation.isAnonymous
-              ? "Anonymous"
-              : conversation.author?.username}
+            {conversation.author?.username}
           </span>
           <span className="conversation-date">
             {new Date(conversation.createdAt).toLocaleDateString()}
@@ -143,14 +155,6 @@ const ConversationView = () => {
             required
           />
           <div className="form-actions">
-            <label className="anonymous-checkbox">
-              <input
-                type="checkbox"
-                checked={isAnonymous}
-                onChange={(e) => setIsAnonymous(e.checked)}
-              />
-              Post anonymously
-            </label>
             {replyTo && (
               <button
                 type="button"
@@ -166,6 +170,11 @@ const ConversationView = () => {
           </div>
         </form>
       </div>
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        action={authAction}
+      />
     </div>
   );
 };

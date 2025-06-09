@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createConversation } from "../services/conversationService";
+import { useAuth } from "../context/AuthContext";
 import "../styles/components.css";
 
 const NewConversation = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/login", { state: { from: "/new-conversation" } });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
