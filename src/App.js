@@ -15,6 +15,7 @@ import StockDetail from "./pages/StockDetail";
 import Profile from "./pages/Profile";
 import ConversationView from "./pages/ConversationView";
 import NewConversation from "./pages/NewConversation";
+import AdminArticles from "./pages/AdminArticles";
 
 import NotFound from "./pages/NotFound";
 
@@ -77,6 +78,15 @@ function App() {
             element={
               <PrivateRoute>
                 <Profile />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/admin/articles"
+            element={
+              <PrivateRoute>
+                <AdminArticles />
               </PrivateRoute>
             }
           />

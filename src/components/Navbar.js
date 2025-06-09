@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import "../styles/components.css";
 
 const Navbar = () => {
-  const { logout, isAuthenticated } = useAuth();
+  const { logout, isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -28,6 +28,9 @@ const Navbar = () => {
           {isAuthenticated() ? (
             <>
               <Link to="/profile">Profile</Link>
+              {user?.isAdmin && (
+                <Link to="/admin/articles">Manage Articles</Link>
+              )}
               <button onClick={handleLogout} className="btn btn-danger">
                 Logout
               </button>

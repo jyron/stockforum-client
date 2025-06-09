@@ -4,6 +4,7 @@ import StockHeatmap from "../components/StockHeatmap";
 import SectorFilter from "../components/SectorFilter";
 import ConversationList from "../components/ConversationList";
 import LoadingBar from "../components/LoadingBar";
+import ArticlesSection from "../components/ArticlesSection";
 import { getAllConversations } from "../services/conversationService";
 import "../styles/Craigslist.css";
 import "../styles/components.css";
@@ -101,6 +102,8 @@ const Home = ({ stocks, isLoading, onUpdate }) => {
           </div>
         </div>
       </header>
+
+      <ArticlesSection />
 
       <div className="filters-container">
         <input
