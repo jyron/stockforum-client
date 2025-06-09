@@ -6,6 +6,7 @@ import {
   deleteComment,
 } from "../services/commentService";
 import ReplyForm from "./ReplyForm";
+import "./Comment.css";
 
 const Comment = ({ comment = {}, stockId, onUpdate, isReply = false }) => {
   const { user, isAuthenticated } = useAuth();
@@ -116,12 +117,12 @@ const Comment = ({ comment = {}, stockId, onUpdate, isReply = false }) => {
         <div className="comment-date">{formatDate(comment.createdAt)}</div>
       </div>
 
-      <div className="comment-content">💭 {comment.content}</div>
+      <div className="comment-content">{comment.content}</div>
 
       <div className="comment-footer">
         <div className="comment-actions">
           <button
-            className="btn btn-secondary btn-sm"
+            className="btn btn-secondary"
             onClick={toggleReplyForm}
             title="Reply to this comment"
           >
@@ -130,7 +131,7 @@ const Comment = ({ comment = {}, stockId, onUpdate, isReply = false }) => {
 
           {isAuthor && isAuthenticated() && (
             <button
-              className="btn btn-danger btn-sm"
+              className="btn btn-danger"
               onClick={handleDelete}
               title="Delete this comment"
             >
@@ -141,14 +142,14 @@ const Comment = ({ comment = {}, stockId, onUpdate, isReply = false }) => {
 
         <div className="comment-stats">
           <button
-            className={`vote-btn ${isLiked ? "active liked" : ""}`}
+            className={`vote-btn ${isLiked ? "liked" : ""}`}
             onClick={handleLike}
             title="Like this comment"
           >
             👍 {comment.likes || 0}
           </button>
           <button
-            className={`vote-btn ${isDisliked ? "active disliked" : ""}`}
+            className={`vote-btn ${isDisliked ? "disliked" : ""}`}
             onClick={handleDislike}
             title="Dislike this comment"
           >

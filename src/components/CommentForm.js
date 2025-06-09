@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createComment } from "../services/commentService";
 import { useAuth } from "../context/AuthContext";
+import "./Comment.css";
 
 const CommentForm = ({ stockId, onSubmit }) => {
   const [content, setContent] = useState("");
