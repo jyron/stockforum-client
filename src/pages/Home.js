@@ -1,16 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import StockTable from "../components/StockTable";
 import StockHeatmap from "../components/StockHeatmap";
 import SectorFilter from "../components/SectorFilter";
+import ConversationList from "../components/ConversationList";
 import LoadingBar from "../components/LoadingBar";
+import { getAllConversations } from "../services/conversationService";
 import "../styles/Craigslist.css";
 import "../styles/components.css";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Home = ({ stocks, isLoading, onUpdate }) => {
+  const { isAuthenticated } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState("all"); // "all", "gainers", "losers"
   const [selectedSector, setSelectedSector] = useState("");
-  const [viewMode, setViewMode] = useState("table"); // "table" or "heatmap"
+  const [viewMode, setViewMode] = useState("table"); // "table", "heatmap", or "conversations"
+  const [conversations, setConversations] = useState([]);
+  const [isLoadingConversations, setIsLoadingConversations] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Fetch conversations when viewMode changes to "conversations"
+  useEffect(() => {
+    if (viewMode === "conversations") {
+      fetchConversations();
+    }
+  }, [viewMode]);
+
+  const fetchConversations = async () => {
+    setIsLoadingConversations(true);
+    setError(null);
+    const result = await getAllConversations();
+    if (result.success) {
+      setConversations(result.data);
+    } else {
+      setError(result.error);
+    }
+    setIsLoadingConversations(false);
+  };
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -28,7 +55,7 @@ const Home = ({ stocks, isLoading, onUpdate }) => {
     setSelectedSector(sector);
   };
 
-  // First filter by search term and sector
+  // Filter stocks
   let filteredStocks = stocks.filter(
     (stock) =>
       (stock.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -36,7 +63,11 @@ const Home = ({ stocks, isLoading, onUpdate }) => {
       (!selectedSector || stock.sector === selectedSector)
   );
 
-  // Then filter by selection
+  // Filter conversations
+  const filteredConversations = conversations?.filter((conversation) =>
+    conversation.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (activeFilter === "gainers") {
     filteredStocks = filteredStocks
       .filter((stock) => stock.percentChange > 0)
@@ -74,15 +105,21 @@ const Home = ({ stocks, isLoading, onUpdate }) => {
       <div className="filters-container">
         <input
           type="text"
-          placeholder="Search stocks..."
+          placeholder={
+            viewMode === "conversations"
+              ? "Search conversations..."
+              : "Search stocks..."
+          }
           value={searchTerm}
           onChange={handleSearch}
           className="search-input"
         />
-        <SectorFilter
-          selectedSector={selectedSector}
-          onSectorChange={handleSectorChange}
-        />
+        {viewMode !== "conversations" && (
+          <SectorFilter
+            selectedSector={selectedSector}
+            onSectorChange={handleSectorChange}
+          />
+        )}
       </div>
 
       <div className="view-controls">
@@ -100,36 +137,62 @@ const Home = ({ stocks, isLoading, onUpdate }) => {
           >
             🗂️ Heatmap View
           </button>
+          <button
+            className={`view-tab ${
+              viewMode === "conversations" ? "active" : ""
+            }`}
+            onClick={() => handleViewModeChange("conversations")}
+          >
+            💬 Conversations
+          </button>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="filter-tabs">
-          <button
-            className={`filter-tab ${activeFilter === "all" ? "active" : ""}`}
-            onClick={() => handleFilterChange("all")}
-          >
-            All Stocks
-          </button>
-          <button
-            className={`filter-tab ${
-              activeFilter === "gainers" ? "active" : ""
-            }`}
-            onClick={() => handleFilterChange("gainers")}
-          >
-            Top Gainers
-          </button>
-          <button
-            className={`filter-tab ${
-              activeFilter === "losers" ? "active" : ""
-            }`}
-            onClick={() => handleFilterChange("losers")}
-          >
-            Top Losers
-          </button>
-        </div>
+        {viewMode !== "conversations" && (
+          <div className="filter-tabs">
+            <button
+              className={`filter-tab ${activeFilter === "all" ? "active" : ""}`}
+              onClick={() => handleFilterChange("all")}
+            >
+              All Stocks
+            </button>
+            <button
+              className={`filter-tab ${
+                activeFilter === "gainers" ? "active" : ""
+              }`}
+              onClick={() => handleFilterChange("gainers")}
+            >
+              Top Gainers
+            </button>
+            <button
+              className={`filter-tab ${
+                activeFilter === "losers" ? "active" : ""
+              }`}
+              onClick={() => handleFilterChange("losers")}
+            >
+              Top Losers
+            </button>
+          </div>
+        )}
       </div>
 
-      {filteredStocks.length === 0 ? null : viewMode === "heatmap" ? (
+      {viewMode === "conversations" ? (
+        <div className="conversations-section">
+          <div className="conversations-header">
+            <h2>Recent Conversations</h2>
+            {isAuthenticated() && (
+              <Link to="/new-conversation" className="new-conversation-button">
+                Start New Conversation
+              </Link>
+            )}
+          </div>
+          {error && <div className="error-message">{error}</div>}
+          {isLoadingConversations ? (
+            <LoadingBar />
+          ) : (
+            <ConversationList conversations={filteredConversations || []} />
+          )}
+        </div>
+      ) : viewMode === "heatmap" ? (
         <StockHeatmap stocks={filteredStocks} />
       ) : (
         <StockTable stocks={filteredStocks} onUpdate={onUpdate} />
