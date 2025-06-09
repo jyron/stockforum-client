@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 import "../styles/components.css";
@@ -8,7 +8,7 @@ const AdminArticleManager = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editingArticle, setEditingArticle] = useState(null);
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -19,11 +19,7 @@ const AdminArticleManager = () => {
     isPublished: false,
   });
 
-  useEffect(() => {
-    fetchArticles();
-  }, []);
-
-  const fetchArticles = async () => {
+  const fetchArticles = useCallback(async () => {
     try {
       if (!isAuthenticated()) {
         setError("Not authenticated. Please log in.");
@@ -42,7 +38,11 @@ const AdminArticleManager = () => {
       );
       setLoading(false);
     }
-  };
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    fetchArticles();
+  }, [fetchArticles]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
