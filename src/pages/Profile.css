@@ -1,0 +1,121 @@
+.profile-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-info {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  white-space: nowrap;
+}
+
+.info-row label {
+  min-width: 100px;
+  font-weight: bold;
+}
+
+.info-value {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.info-value span {
+  white-space: nowrap;
+}
+
+.username-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.username-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.username-buttons {
+  display: inline-flex;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.edit-link {
+  color: #0066cc;
+  text-decoration: none;
+  padding: 0;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.edit-link:hover {
+  text-decoration: underline;
+}
+
+.alert {
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.alert-info {
+  background-color: #e8f1ff;
+  padding: 15px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.alert-info a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.alert-info a:hover {
+  text-decoration: underline;
+}
+
+.user-stocks {
+  margin-top: 30px;
+}
+
+.stock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
