@@ -366,7 +366,7 @@ const StockHeatmap = ({ stocks = null }) => {
       {stockData.length > 0 && (
         <div className="mt-3">
           <small className="text-muted">
-            Showing {stockData.length} stocks from your database
+            Showing {stockData.length} stocks
           </small>
         </div>
       )}
