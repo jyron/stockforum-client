@@ -27,7 +27,7 @@ const AdminArticleManager = () => {
         return;
       }
 
-      const response = await api.get("/api/articles/all");
+      const response = await api.get("/api/articles/admin/all");
       setArticles(response.data);
       setLoading(false);
     } catch (err) {

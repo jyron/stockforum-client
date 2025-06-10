@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
 import "../styles/components.css";
 
 const ArticlesSection = () => {
@@ -11,13 +11,15 @@ const ArticlesSection = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/articles/published`
-        );
+        const response = await api.get("/api/articles/all");
         setArticles(response.data);
         setLoading(false);
       } catch (err) {
-        setError("Failed to load articles");
+        console.error("Error fetching articles:", err);
+        setError(
+          err.response?.data?.message ||
+            "Failed to load articles. Please check your connection and try again."
+        );
         setLoading(false);
       }
     };
@@ -25,72 +27,42 @@ const ArticlesSection = () => {
     fetchArticles();
   }, []);
 
-  if (loading) {
-    return (
-      <section className="articles-section">
-        <div className="articles-header">
-          <h2>StockForum.io Articles</h2>
-        </div>
-        <div className="loading">Loading articles...</div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section className="articles-section">
-        <div className="articles-header">
-          <h2>StockForum.io Articles</h2>
-        </div>
-        <div className="error-message">{error}</div>
-      </section>
-    );
-  }
-
-  if (articles.length === 0) {
-    return (
-      <section className="articles-section">
-        <div className="articles-header">
-          <h2>StockForum.io Articles</h2>
-        </div>
-        <div className="empty-state">No articles available yet.</div>
-      </section>
-    );
-  }
+  if (loading) return <div className="loading">Loading articles...</div>;
+  if (error) return <div className="error-message">{error}</div>;
+  if (articles.length === 0) return null;
 
   return (
     <section className="articles-section">
       <div className="articles-header">
         <h2>StockForum.io Articles</h2>
-        <p className="articles-subtitle">
-          Daily insights and analysis from our expert contributors
-        </p>
+        <p>Expert insights and analysis for informed trading decisions</p>
       </div>
 
       <div className="articles-grid">
         {articles.map((article) => (
-          <article key={article._id} className="article-card">
-            <span className="article-category">{article.category}</span>
+          <Link
+            to={`/article/${article._id}`}
+            key={article._id}
+            className="article-card"
+          >
+            <div className="article-category">{article.category}</div>
             <h3 className="article-title">{article.title}</h3>
             <p className="article-excerpt">{article.excerpt}</p>
             <div className="article-meta">
-              <span className="article-author">
-                👤 {article.author.username}
-              </span>
               <span className="article-date">
-                {new Date(article.publishedAt).toLocaleDateString()}
+                {new Date(article.createdAt).toLocaleDateString()}
               </span>
               <span className="article-read-time">
-                ⏱️ {article.readTime} min read
+                {article.readTime} min read
               </span>
             </div>
-          </article>
+          </Link>
         ))}
       </div>
 
       <div className="articles-footer">
         <Link to="/articles" className="view-all-link">
-          View All Articles →
+          View All Articles
         </Link>
       </div>
     </section>
