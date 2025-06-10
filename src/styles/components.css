@@ -817,3 +817,114 @@
 .error-message {
   color: #cb2431;
 }
+
+.article-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.article-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.article-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.article-category {
+  background-color: #f0f0f0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-weight: 500;
+}
+
+.article-title {
+  font-size: 2.5rem;
+  margin: 1rem 0;
+  line-height: 1.2;
+  color: #333;
+}
+
+.article-excerpt {
+  font-size: 1.2rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.article-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+}
+
+.article-content p {
+  margin-bottom: 1.5rem;
+}
+
+.article-footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}
+
+.article-author {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.author-label {
+  color: #666;
+}
+
+.author-name {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Articles Page */
+.articles-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.articles-page .page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.articles-page .page-header h1 {
+  font-size: 2.5rem;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+.articles-page .page-header p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.articles-page .articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.articles-page .empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  color: #666;
+}

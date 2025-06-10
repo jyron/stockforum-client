@@ -16,6 +16,8 @@ import Profile from "./pages/Profile";
 import ConversationView from "./pages/ConversationView";
 import NewConversation from "./pages/NewConversation";
 import AdminArticles from "./pages/AdminArticles";
+import ArticleDetail from "./pages/ArticleDetail";
+import Articles from "./pages/Articles";
 
 import NotFound from "./pages/NotFound";
 
@@ -72,6 +74,8 @@ function App() {
           <Route path="/stocks/:symbol" element={<StockDetail />} />
           <Route path="/conversation/:id" element={<ConversationView />} />
           <Route path="/new-conversation" element={<NewConversation />} />
+          <Route path="/article/:id" element={<ArticleDetail />} />
+          <Route path="/articles" element={<Articles />} />
 
           <Route
             path="/profile"
