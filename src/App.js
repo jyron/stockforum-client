@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
@@ -6,25 +6,24 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import StockBanner from "./components/StockBanner";
-
-// Pages
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import StockDetail from "./pages/StockDetail";
-import Profile from "./pages/Profile";
-import ConversationView from "./pages/ConversationView";
-import NewConversation from "./pages/NewConversation";
-import AdminArticles from "./pages/AdminArticles";
-import ArticleDetail from "./pages/ArticleDetail";
-import Articles from "./pages/Articles";
-
-import NotFound from "./pages/NotFound";
+import PrivateRoute from "./components/PrivateRoute";
 
 // Context
 import { useAuth } from "./context/AuthContext";
-import PrivateRoute from "./components/PrivateRoute";
 import { getAllStocks } from "./services/stockService";
+
+// Lazy loaded components
+const Home = lazy(() => import("./pages/Home"));
+const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
+const StockDetail = lazy(() => import("./pages/StockDetail"));
+const Profile = lazy(() => import("./pages/Profile"));
+const ConversationView = lazy(() => import("./pages/ConversationView"));
+const NewConversation = lazy(() => import("./pages/NewConversation"));
+const AdminArticles = lazy(() => import("./pages/AdminArticles"));
+const ArticleDetail = lazy(() => import("./pages/ArticleDetail"));
+const Articles = lazy(() => import("./pages/Articles"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 function App() {
   const { loading: authLoading } = useAuth();
@@ -58,45 +57,47 @@ function App() {
       <Navbar />
       <StockBanner stocks={stocks} />
       <main className="container">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                stocks={stocks}
-                isLoading={isLoading}
-                onUpdate={fetchStocks}
-              />
-            }
-          />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/stocks/:symbol" element={<StockDetail />} />
-          <Route path="/conversation/:id" element={<ConversationView />} />
-          <Route path="/new-conversation" element={<NewConversation />} />
-          <Route path="/article/:id" element={<ArticleDetail />} />
-          <Route path="/articles" element={<Articles />} />
+        <Suspense fallback={<div className="loading">Loading...</div>}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  stocks={stocks}
+                  isLoading={isLoading}
+                  onUpdate={fetchStocks}
+                />
+              }
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/stocks/:symbol" element={<StockDetail />} />
+            <Route path="/conversation/:id" element={<ConversationView />} />
+            <Route path="/new-conversation" element={<NewConversation />} />
+            <Route path="/article/:id" element={<ArticleDetail />} />
+            <Route path="/articles" element={<Articles />} />
 
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            }
-          />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
 
-          <Route
-            path="/admin/articles"
-            element={
-              <PrivateRoute>
-                <AdminArticles />
-              </PrivateRoute>
-            }
-          />
+            <Route
+              path="/admin/articles"
+              element={
+                <PrivateRoute>
+                  <AdminArticles />
+                </PrivateRoute>
+              }
+            />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </main>
       <Footer />
     </div>
