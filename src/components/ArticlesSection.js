@@ -34,16 +34,15 @@ const ArticlesSection = () => {
   return (
     <section className="articles-section">
       <div className="articles-header">
-        <h2>StockForum.io Articles</h2>
-        <p>Expert insights and analysis for informed trading decisions</p>
+        <h2>Latest Market Insights</h2>
       </div>
 
-      <div className="articles-grid">
+      <div className="articles-list-vertical">
         {articles.map((article) => (
           <Link
             to={`/article/${article._id}`}
             key={article._id}
-            className="article-card"
+            className="article-vertical-card"
           >
             <div className="article-category">{article.category}</div>
             <h3 className="article-title">{article.title}</h3>
