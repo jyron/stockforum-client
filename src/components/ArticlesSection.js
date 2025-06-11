@@ -32,24 +32,34 @@ const ArticlesSection = () => {
   if (articles.length === 0) return null;
 
   return (
-    <section className="articles-section">
+    <section className="articles-sidebar">
       <div className="articles-header">
-        <h2>Latest Market Insights</h2>
+        <h3>Latest Market Insights</h3>
       </div>
 
-      <div className="articles-list-vertical">
-        {articles.map((article) => (
+      <div className="articles-sidebar-list">
+        {articles.slice(0, 6).map((article) => (
           <Link
             to={`/article/${article._id}`}
             key={article._id}
-            className="article-vertical-card"
+            className="article-sidebar-card"
           >
-            <div className="article-category">{article.category}</div>
-            <h3 className="article-title">{article.title}</h3>
-            <p className="article-excerpt">{article.excerpt}</p>
-            <div className="article-meta">
+            <div className="article-sidebar-category">{article.category}</div>
+            <h4 className="article-sidebar-title">{article.title}</h4>
+            <p className="article-sidebar-excerpt">
+              {article.excerpt.length > 100
+                ? `${article.excerpt.substring(0, 100)}...`
+                : article.excerpt}
+            </p>
+            <div className="article-sidebar-meta">
+              <span className="article-author">
+                By {article.author?.username || "Anonymous"}
+              </span>
               <span className="article-date">
-                {new Date(article.createdAt).toLocaleDateString()}
+                {new Date(article.createdAt).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                })}
               </span>
               <span className="article-read-time">
                 {article.readTime} min read
@@ -61,7 +71,7 @@ const ArticlesSection = () => {
 
       <div className="articles-footer">
         <Link to="/articles" className="view-all-link">
-          View All Articles
+          View All Articles →
         </Link>
       </div>
     </section>

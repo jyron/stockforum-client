@@ -79,6 +79,11 @@ const Home = ({ stocks, isLoading, onUpdate }) => {
       .sort((a, b) => a.percentChange - b.percentChange);
   }
 
+  // Get top 5 largest percent change stocks (both positive and negative)
+  const topMovers = [...stocks]
+    .sort((a, b) => Math.abs(b.percentChange) - Math.abs(a.percentChange))
+    .slice(0, 5);
+
   if (isLoading) {
     return (
       <div className="home-container">
@@ -103,103 +108,143 @@ const Home = ({ stocks, isLoading, onUpdate }) => {
         </div>
       </header>
 
-      <ArticlesSection />
-
-      <div className="filters-container">
-        <input
-          type="text"
-          placeholder={
-            viewMode === "conversations"
-              ? "Search conversations..."
-              : "Search stocks..."
-          }
-          value={searchTerm}
-          onChange={handleSearch}
-          className="search-input"
-        />
-        {viewMode !== "conversations" && (
-          <SectorFilter
-            selectedSector={selectedSector}
-            onSectorChange={handleSectorChange}
-          />
-        )}
-      </div>
-
-      <div className="view-controls">
-        {/* View Mode Tabs */}
-        <div className="view-tabs">
-          <button
-            className={`view-tab ${viewMode === "table" ? "active" : ""}`}
-            onClick={() => handleViewModeChange("table")}
-          >
-            📊 Table View
-          </button>
-          <button
-            className={`view-tab ${viewMode === "heatmap" ? "active" : ""}`}
-            onClick={() => handleViewModeChange("heatmap")}
-          >
-            🗂️ Heatmap View
-          </button>
-          <button
-            className={`view-tab ${
-              viewMode === "conversations" ? "active" : ""
-            }`}
-            onClick={() => handleViewModeChange("conversations")}
-          >
-            💬 Conversations
-          </button>
+      <div className="three-column-layout">
+        <div className="left-sidebar">
+          <div className="top-movers-section">
+            <h3>Top Movers</h3>
+            <div className="top-movers-list">
+              {topMovers.map((stock) => (
+                <Link
+                  to={`/stocks/${stock.symbol}`}
+                  key={stock.symbol}
+                  className="top-mover-item"
+                >
+                  <div className="mover-symbol">{stock.symbol}</div>
+                  <div className="mover-name">{stock.name}</div>
+                  <div
+                    className={`mover-change ${
+                      stock.percentChange >= 0 ? "positive" : "negative"
+                    }`}
+                  >
+                    {stock.percentChange >= 0 ? "+" : ""}
+                    {stock.percentChange?.toFixed(2)}%
+                  </div>
+                  <div className="mover-price">
+                    ${stock.currentPrice?.toFixed(2)}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {viewMode !== "conversations" && (
-          <div className="filter-tabs">
-            <button
-              className={`filter-tab ${activeFilter === "all" ? "active" : ""}`}
-              onClick={() => handleFilterChange("all")}
-            >
-              All Stocks
-            </button>
-            <button
-              className={`filter-tab ${
-                activeFilter === "gainers" ? "active" : ""
-              }`}
-              onClick={() => handleFilterChange("gainers")}
-            >
-              Top Gainers
-            </button>
-            <button
-              className={`filter-tab ${
-                activeFilter === "losers" ? "active" : ""
-              }`}
-              onClick={() => handleFilterChange("losers")}
-            >
-              Top Losers
-            </button>
-          </div>
-        )}
-      </div>
-
-      {viewMode === "conversations" ? (
-        <div className="conversations-section">
-          <div className="conversations-header">
-            <h2>Recent Conversations</h2>
-            {isAuthenticated() && (
-              <Link to="/new-conversation" className="new-conversation-button">
-                Start New Conversation
-              </Link>
+        <div className="main-content">
+          <div className="filters-container">
+            <input
+              type="text"
+              placeholder={
+                viewMode === "conversations"
+                  ? "Search conversations..."
+                  : "Search stocks..."
+              }
+              value={searchTerm}
+              onChange={handleSearch}
+              className="search-input"
+            />
+            {viewMode !== "conversations" && (
+              <SectorFilter
+                selectedSector={selectedSector}
+                onSectorChange={handleSectorChange}
+              />
             )}
           </div>
-          {error && <div className="error-message">{error}</div>}
-          {isLoadingConversations ? (
-            <LoadingBar />
+
+          <div className="view-controls">
+            {/* View Mode Tabs */}
+            <div className="view-tabs">
+              <button
+                className={`view-tab ${viewMode === "table" ? "active" : ""}`}
+                onClick={() => handleViewModeChange("table")}
+              >
+                📊 Table View
+              </button>
+              <button
+                className={`view-tab ${viewMode === "heatmap" ? "active" : ""}`}
+                onClick={() => handleViewModeChange("heatmap")}
+              >
+                🗂️ Heatmap View
+              </button>
+              <button
+                className={`view-tab ${
+                  viewMode === "conversations" ? "active" : ""
+                }`}
+                onClick={() => handleViewModeChange("conversations")}
+              >
+                💬 Conversations
+              </button>
+            </div>
+
+            {viewMode !== "conversations" && (
+              <div className="filter-tabs">
+                <button
+                  className={`filter-tab ${
+                    activeFilter === "all" ? "active" : ""
+                  }`}
+                  onClick={() => handleFilterChange("all")}
+                >
+                  All Stocks
+                </button>
+                <button
+                  className={`filter-tab ${
+                    activeFilter === "gainers" ? "active" : ""
+                  }`}
+                  onClick={() => handleFilterChange("gainers")}
+                >
+                  Top Gainers
+                </button>
+                <button
+                  className={`filter-tab ${
+                    activeFilter === "losers" ? "active" : ""
+                  }`}
+                  onClick={() => handleFilterChange("losers")}
+                >
+                  Top Losers
+                </button>
+              </div>
+            )}
+          </div>
+
+          {viewMode === "conversations" ? (
+            <div className="conversations-section">
+              <div className="conversations-header">
+                <h2>Recent Conversations</h2>
+                {isAuthenticated() && (
+                  <Link
+                    to="/new-conversation"
+                    className="new-conversation-button"
+                  >
+                    Start New Conversation
+                  </Link>
+                )}
+              </div>
+              {error && <div className="error-message">{error}</div>}
+              {isLoadingConversations ? (
+                <LoadingBar />
+              ) : (
+                <ConversationList conversations={filteredConversations || []} />
+              )}
+            </div>
+          ) : viewMode === "heatmap" ? (
+            <StockHeatmap stocks={filteredStocks} />
           ) : (
-            <ConversationList conversations={filteredConversations || []} />
+            <StockTable stocks={filteredStocks} onUpdate={onUpdate} />
           )}
         </div>
-      ) : viewMode === "heatmap" ? (
-        <StockHeatmap stocks={filteredStocks} />
-      ) : (
-        <StockTable stocks={filteredStocks} onUpdate={onUpdate} />
-      )}
+
+        <div className="right-sidebar">
+          <ArticlesSection />
+        </div>
+      </div>
     </div>
   );
 };
