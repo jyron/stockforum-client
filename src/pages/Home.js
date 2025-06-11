@@ -20,6 +20,7 @@ const Home = ({ stocks, isLoading, onUpdate }) => {
   const [conversations, setConversations] = useState([]);
   const [isLoadingConversations, setIsLoadingConversations] = useState(false);
   const [error, setError] = useState(null);
+  const [topMoversFilter, setTopMoversFilter] = useState("all"); // "all", "gainers", "losers"
 
   // Fetch conversations when viewMode changes to "conversations"
   useEffect(() => {
@@ -79,10 +80,29 @@ const Home = ({ stocks, isLoading, onUpdate }) => {
       .sort((a, b) => a.percentChange - b.percentChange);
   }
 
-  // Get top 5 largest percent change stocks (both positive and negative)
-  const topMovers = [...stocks]
-    .sort((a, b) => Math.abs(b.percentChange) - Math.abs(a.percentChange))
-    .slice(0, 5);
+  // Get top movers based on filter
+  const getTopMovers = () => {
+    let filteredStocks = [...stocks];
+
+    if (topMoversFilter === "gainers") {
+      filteredStocks = filteredStocks
+        .filter((stock) => stock.percentChange > 0)
+        .sort((a, b) => b.percentChange - a.percentChange);
+    } else if (topMoversFilter === "losers") {
+      filteredStocks = filteredStocks
+        .filter((stock) => stock.percentChange < 0)
+        .sort((a, b) => a.percentChange - b.percentChange);
+    } else {
+      // Show top movers by absolute change
+      filteredStocks = filteredStocks.sort(
+        (a, b) => Math.abs(b.percentChange) - Math.abs(a.percentChange)
+      );
+    }
+
+    return filteredStocks.slice(0, 5);
+  };
+
+  const topMovers = getTopMovers();
 
   if (isLoading) {
     return (
@@ -112,28 +132,69 @@ const Home = ({ stocks, isLoading, onUpdate }) => {
         <div className="left-sidebar">
           <div className="top-movers-section">
             <h3>Top Movers</h3>
+
+            {/* Top Movers Filter Tabs */}
+            <div className="top-movers-tabs">
+              <button
+                className={`top-mover-tab ${
+                  topMoversFilter === "all" ? "active" : ""
+                }`}
+                onClick={() => setTopMoversFilter("all")}
+              >
+                All
+              </button>
+              <button
+                className={`top-mover-tab ${
+                  topMoversFilter === "gainers" ? "active" : ""
+                }`}
+                onClick={() => setTopMoversFilter("gainers")}
+              >
+                Gainers
+              </button>
+              <button
+                className={`top-mover-tab ${
+                  topMoversFilter === "losers" ? "active" : ""
+                }`}
+                onClick={() => setTopMoversFilter("losers")}
+              >
+                Losers
+              </button>
+            </div>
+
             <div className="top-movers-list">
-              {topMovers.map((stock) => (
-                <Link
-                  to={`/stocks/${stock.symbol}`}
-                  key={stock.symbol}
-                  className="top-mover-item"
-                >
-                  <div className="mover-symbol">{stock.symbol}</div>
-                  <div className="mover-name">{stock.name}</div>
-                  <div
-                    className={`mover-change ${
-                      stock.percentChange >= 0 ? "positive" : "negative"
-                    }`}
+              {topMovers.length > 0 ? (
+                topMovers.map((stock) => (
+                  <Link
+                    to={`/stocks/${stock.symbol}`}
+                    key={stock.symbol}
+                    className="top-mover-item"
                   >
-                    {stock.percentChange >= 0 ? "+" : ""}
-                    {stock.percentChange?.toFixed(2)}%
-                  </div>
-                  <div className="mover-price">
-                    ${stock.currentPrice?.toFixed(2)}
-                  </div>
-                </Link>
-              ))}
+                    <div className="mover-symbol">{stock.symbol}</div>
+                    <div className="mover-name">{stock.name}</div>
+                    <div
+                      className={`mover-change ${
+                        stock.percentChange >= 0 ? "positive" : "negative"
+                      }`}
+                    >
+                      {stock.percentChange >= 0 ? "+" : ""}
+                      {stock.percentChange?.toFixed(2)}%
+                    </div>
+                    <div className="mover-price">
+                      ${stock.currentPrice?.toFixed(2)}
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="no-movers">
+                  No{" "}
+                  {topMoversFilter === "gainers"
+                    ? "gainers"
+                    : topMoversFilter === "losers"
+                    ? "losers"
+                    : "movers"}{" "}
+                  available
+                </div>
+              )}
             </div>
           </div>
         </div>
