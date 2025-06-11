@@ -1059,3 +1059,58 @@
     font-size: 1.1rem;
   }
 }
+
+/* Social Share Component Styles */
+.social-share {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.share-label {
+  font-size: 0.9rem;
+  color: #586069;
+}
+
+.share-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.share-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.share-button:hover {
+  transform: translateY(-2px);
+}
+
+.share-button.twitter {
+  background-color: #1da1f2;
+}
+
+.share-button.facebook {
+  background-color: #4267b2;
+}
+
+.share-button.linkedin {
+  background-color: #0077b5;
+}
+
+.share-button.reddit {
+  background-color: #ff4500;
+}
+
+.share-button i {
+  font-size: 1.2rem;
+}

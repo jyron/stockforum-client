@@ -7,6 +7,7 @@ import {
   addComment,
 } from "../services/conversationService";
 import AuthModal from "../components/AuthModal";
+import SocialShare from "../components/SocialShare";
 import "../styles/components.css";
 
 const ConversationView = () => {
@@ -141,6 +142,11 @@ const ConversationView = () => {
             {new Date(conversation.createdAt).toLocaleDateString()}
           </span>
         </div>
+        <SocialShare
+          url={window.location.href}
+          title={conversation.title}
+          description={conversation.content.substring(0, 200)}
+        />
       </div>
       <div className="conversation-content">
         <p>{conversation.content}</p>

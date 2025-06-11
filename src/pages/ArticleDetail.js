@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../services/api";
+import SocialShare from "../components/SocialShare";
 import "../styles/components.css";
 
 const ArticleDetail = () => {
@@ -44,6 +45,11 @@ const ArticleDetail = () => {
         </div>
         <h1 className="article-title">{article.title}</h1>
         <p className="article-excerpt">{article.excerpt}</p>
+        <SocialShare
+          url={window.location.href}
+          title={article.title}
+          description={article.excerpt}
+        />
       </header>
 
       <div className="article-content">
@@ -59,6 +65,11 @@ const ArticleDetail = () => {
             {article.author?.username || "Anonymous"}
           </span>
         </div>
+        <SocialShare
+          url={window.location.href}
+          title={article.title}
+          description={article.excerpt}
+        />
       </footer>
     </div>
   );
