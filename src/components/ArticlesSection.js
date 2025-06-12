@@ -61,9 +61,6 @@ const ArticlesSection = () => {
                   day: "numeric",
                 })}
               </span>
-              <span className="article-read-time">
-                {article.readTime} min read
-              </span>
             </div>
           </Link>
         ))}
