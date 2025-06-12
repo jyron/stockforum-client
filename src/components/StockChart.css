@@ -1,17 +1,115 @@
+.stock-chart-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 15px auto;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.chart-controls {
+  padding: 15px 20px 10px;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.time-range-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.time-btn {
+  padding: 6px 12px;
+  border: 1px solid #d1d5db;
+  background-color: white;
+  color: #6b7280;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.time-btn:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.time-btn.active {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
 .stock-chart {
   width: 100%;
-  max-width: 800px;
-  margin: 20px auto;
+  height: 300px;
   padding: 20px;
-  background-color: white;
+  position: relative;
+}
+
+.chart-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.chart-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #ef4444;
+  font-size: 14px;
+  padding: 20px;
+  text-align: center;
+}
+
+.chart-error span {
+  padding: 10px 16px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 768px) {
-  .stock-chart {
+  .stock-chart-container {
     max-width: 95%;
-    padding: 10px;
     margin: 10px auto;
+  }
+
+  .stock-chart {
+    height: 250px;
+    padding: 15px;
+  }
+
+  .chart-controls {
+    padding: 12px 15px 8px;
+  }
+
+  .time-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .time-range-buttons {
+    gap: 6px;
+  }
+
+  .time-btn {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .stock-chart {
+    height: 220px;
+    padding: 10px;
   }
 }
