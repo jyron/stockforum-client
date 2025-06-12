@@ -10,6 +10,7 @@ import { useAuth } from "../context/AuthContext";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
 import StockChart from "../components/StockChart";
+import StockNews from "../components/StockNews";
 import "./StockDetail.css";
 
 const StockDetail = () => {
@@ -245,6 +246,8 @@ const StockDetail = () => {
             : "N/A"}
         </p>
       </div>
+
+      <StockNews symbol={stock.symbol} />
 
       <div className="stock-actions">
         <div className="stock-stats">
