@@ -203,6 +203,20 @@ const StockDetail = () => {
             {stock.sector && (
               <span className="sector">Sector: {stock.sector}</span>
             )}
+            <div className="stock-stats">
+              <button
+                className={`vote-btn ${isLiked ? "active" : ""}`}
+                onClick={handleLike}
+              >
+                👍 {stock.likes || 0}
+              </button>
+              <button
+                className={`vote-btn ${isDisliked ? "active" : ""}`}
+                onClick={handleDislike}
+              >
+                👎 {stock.dislikes || 0}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -248,23 +262,6 @@ const StockDetail = () => {
       </div>
 
       <StockNews symbol={stock.symbol} />
-
-      <div className="stock-actions">
-        <div className="stock-stats">
-          <button
-            className={`vote-btn ${isLiked ? "active" : ""}`}
-            onClick={handleLike}
-          >
-            👍 {stock.likes || 0}
-          </button>
-          <button
-            className={`vote-btn ${isDisliked ? "active" : ""}`}
-            onClick={handleDislike}
-          >
-            👎 {stock.dislikes || 0}
-          </button>
-        </div>
-      </div>
 
       <div className="comments-section">
         <h2>Comments</h2>
