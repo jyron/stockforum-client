@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import api from "../services/api";
 import SocialShare from "../components/SocialShare";
 import "../styles/components.css";
@@ -52,10 +53,8 @@ const ArticleDetail = () => {
         />
       </header>
 
-      <div className="article-content">
-        {article.content.split("\n").map((paragraph, index) => (
-          <p key={index}>{paragraph}</p>
-        ))}
+      <div className="article-content markdown-content">
+        <ReactMarkdown>{article.content}</ReactMarkdown>
       </div>
 
       <footer className="article-footer">
