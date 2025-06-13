@@ -2,6 +2,7 @@ import React, { useState, useEffect, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import "./styles/typography.css";
+import AdSenseLoader from "./components/AdSenseLoader";
 
 // Components
 import Navbar from "./components/Navbar";
@@ -54,54 +55,57 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <Navbar />
-      <StockBanner stocks={stocks} />
-      <main className="container">
-        <Suspense fallback={<div className="loading">Loading...</div>}>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Home
-                  stocks={stocks}
-                  isLoading={isLoading}
-                  onUpdate={fetchStocks}
-                />
-              }
-            />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/stocks/:symbol" element={<StockDetail />} />
-            <Route path="/conversation/:id" element={<ConversationView />} />
-            <Route path="/new-conversation" element={<NewConversation />} />
-            <Route path="/article/:id" element={<ArticleDetail />} />
-            <Route path="/articles" element={<Articles />} />
+    <>
+      <AdSenseLoader />
+      <div className="app">
+        <Navbar />
+        <StockBanner stocks={stocks} />
+        <main className="container">
+          <Suspense fallback={<div className="loading">Loading...</div>}>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Home
+                    stocks={stocks}
+                    isLoading={isLoading}
+                    onUpdate={fetchStocks}
+                  />
+                }
+              />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/stocks/:symbol" element={<StockDetail />} />
+              <Route path="/conversation/:id" element={<ConversationView />} />
+              <Route path="/new-conversation" element={<NewConversation />} />
+              <Route path="/article/:id" element={<ArticleDetail />} />
+              <Route path="/articles" element={<Articles />} />
 
-            <Route
-              path="/profile"
-              element={
-                <PrivateRoute>
-                  <Profile />
-                </PrivateRoute>
-              }
-            />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <Profile />
+                  </PrivateRoute>
+                }
+              />
 
-            <Route
-              path="/admin/articles"
-              element={
-                <PrivateRoute>
-                  <AdminArticles />
-                </PrivateRoute>
-              }
-            />
+              <Route
+                path="/admin/articles"
+                element={
+                  <PrivateRoute>
+                    <AdminArticles />
+                  </PrivateRoute>
+                }
+              />
 
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </main>
-      <Footer />
-    </div>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }
 
