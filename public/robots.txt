@@ -1,3 +1,14 @@
 # https://www.robotstxt.org/robotstxt.html
+# Allow all crawlers
 User-agent: *
-Disallow:
+Allow: /
+
+# Disallow admin and private routes
+Disallow: /admin/
+Disallow: /profile
+Disallow: /login
+Disallow: /register
+Disallow: /new-conversation
+
+# Sitemap location
+Sitemap: https://stockforum.io/sitemap.xml
