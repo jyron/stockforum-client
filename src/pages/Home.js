@@ -5,6 +5,7 @@ import SectorFilter from "../components/SectorFilter";
 import ConversationList from "../components/ConversationList";
 import LoadingBar from "../components/LoadingBar";
 import ArticlesSection from "../components/ArticlesSection";
+import NewsSection from "../components/NewsSection";
 import { getAllConversations } from "../services/conversationService";
 import "../styles/Craigslist.css";
 import "../styles/components.css";
@@ -306,6 +307,8 @@ const Home = ({ stocks, isLoading, onUpdate }) => {
           <ArticlesSection />
         </div>
       </div>
+
+      <NewsSection />
     </div>
   );
 };
