@@ -2285,3 +2285,146 @@
     border-left: 2px solid var(--color-border);
   }
 }
+
+.news-section {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.news-section h3 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.news-item {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.news-item:last-child {
+  border-bottom: none;
+}
+
+.news-content {
+  display: flex;
+  gap: 20px;
+}
+
+.news-image {
+  flex: 0 0 200px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.news-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.news-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.news-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  flex: 1;
+}
+
+.news-date {
+  color: #666;
+  font-size: 0.9rem;
+  margin-left: 15px;
+  white-space: nowrap;
+}
+
+.news-text {
+  color: #444;
+  margin: 10px 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.news-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.news-source {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.news-link {
+  color: #3498db;
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  border: 1px solid #3498db;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.news-link:hover {
+  background: #3498db;
+  color: white;
+  text-decoration: none;
+}
+
+.news-section.loading,
+.news-section.error {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.news-section.error {
+  color: #e74c3c;
+}
+
+@media (max-width: 768px) {
+  .news-content {
+    flex-direction: column;
+  }
+
+  .news-image {
+    flex: 0 0 200px;
+    width: 100%;
+  }
+
+  .news-header {
+    flex-direction: column;
+  }
+
+  .news-date {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+}
