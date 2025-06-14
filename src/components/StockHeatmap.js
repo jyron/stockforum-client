@@ -304,17 +304,38 @@ const StockHeatmap = ({ stocks = null }) => {
         </div>
       </div>
 
-      <div
-        ref={chartRef}
-        className="heatmap-container"
-        style={{
-          width: "100%",
-          overflowX: "auto",
-          border: "1px solid #dee2e6",
-          borderRadius: "8px",
-          backgroundColor: "#fff",
-        }}
-      />
+      <div style={{ position: "relative" }}>
+        <div
+          ref={chartRef}
+          className="heatmap-container"
+          style={{
+            width: "100%",
+            overflowX: "auto",
+            border: "1px solid #dee2e6",
+            borderRadius: "8px",
+            backgroundColor: "#fff",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: "8px",
+            right: "16px",
+            fontSize: "14px",
+            fontWeight: "600",
+            color: "rgba(0, 0, 0, 0.4)",
+            backgroundColor: "rgba(255, 255, 255, 0.6)",
+            padding: "4px 8px",
+            borderRadius: "4px",
+            fontFamily:
+              "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            pointerEvents: "none",
+            zIndex: 10,
+          }}
+        >
+          stockforum.io
+        </div>
+      </div>
 
       {/* Custom Tooltip Modal */}
       {tooltip.visible && tooltip.data && (
