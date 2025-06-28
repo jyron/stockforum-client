@@ -25,7 +25,9 @@ const NewConversation = lazy(() => import("./pages/NewConversation"));
 const AdminArticles = lazy(() => import("./pages/AdminArticles"));
 const ArticleDetail = lazy(() => import("./pages/ArticleDetail"));
 const Articles = lazy(() => import("./pages/Articles"));
+const RateMyPortfolio = lazy(() => import("./pages/RateMyPortfolio"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const PortfolioDetail = lazy(() => import("./pages/PortfolioDetail"));
 
 function App() {
   const { loading: authLoading } = useAuth();
@@ -80,6 +82,8 @@ function App() {
               <Route path="/new-conversation" element={<NewConversation />} />
               <Route path="/article/:id" element={<ArticleDetail />} />
               <Route path="/articles" element={<Articles />} />
+              <Route path="/rate-my-portfolio" element={<RateMyPortfolio />} />
+              <Route path="/portfolio/:id" element={<PortfolioDetail />} />
 
               <Route
                 path="/profile"
