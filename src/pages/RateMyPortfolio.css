@@ -1,0 +1,434 @@
+/* Rate My Portfolio Page Styles */
+
+/* Main Container */
+.rate-portfolio-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background: #fafafa;
+  min-height: 100vh;
+}
+
+/* Header Section */
+.portfolio-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.portfolio-header .header-content {
+  margin-bottom: 2rem;
+}
+
+.portfolio-header h1 {
+  font-size: 2.5rem;
+  margin: 0 0 0.5rem 0;
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+.portfolio-header .tagline {
+  color: #666;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Portfolio Tabs - Extending existing .tab patterns */
+.portfolio-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.portfolio-tabs .tab {
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+  border-radius: 4px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.portfolio-tabs .tab:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.portfolio-tabs .tab.active {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Upload Section */
+.upload-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+}
+
+.upload-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.upload-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.upload-note {
+  margin: 1rem 0 0 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+}
+
+/* Portfolio Grid - Following existing .articles-grid patterns */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Portfolio Cards - Following existing .conversation-item patterns */
+.portfolio-card {
+  background: #ffffff;
+  border: 1px solid #e1e4e8;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.portfolio-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: #007bff;
+}
+
+/* Portfolio Thumbnail */
+.portfolio-thumbnail {
+  position: relative;
+  height: 200px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.performance-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+}
+
+.performance-text {
+  font-size: 2rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.performance-overlay.positive {
+  background: radial-gradient(
+    circle,
+    rgba(0, 255, 136, 0.3) 0%,
+    rgba(0, 255, 136, 0.1) 100%
+  );
+}
+
+.performance-overlay.negative {
+  background: radial-gradient(
+    circle,
+    rgba(255, 68, 68, 0.3) 0%,
+    rgba(255, 68, 68, 0.1) 100%
+  );
+}
+
+.performance-overlay.neutral {
+  background: radial-gradient(
+    circle,
+    rgba(74, 144, 226, 0.3) 0%,
+    rgba(74, 144, 226, 0.1) 100%
+  );
+}
+
+.premium-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  color: #000;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+}
+
+/* Portfolio Info Section */
+.portfolio-info {
+  padding: 1.5rem;
+}
+
+.portfolio-title-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.portfolio-title {
+  font-size: 1.1rem;
+  margin: 0;
+  color: #1a1a1a;
+  line-height: 1.4;
+  font-weight: 600;
+  flex: 1;
+}
+
+.category-tag {
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Portfolio Meta */
+.portfolio-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.author-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.author-name {
+  font-weight: 600;
+  color: #0366d6;
+}
+
+.post-date {
+  color: #999;
+}
+
+.portfolio-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Voting Section - Following existing voting patterns */
+.vote-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vote-btn {
+  background: none;
+  border: 1px solid #e1e4e8;
+  border-radius: 4px;
+  padding: 6px 8px;
+  cursor: pointer;
+  color: #666;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vote-btn:hover {
+  background-color: #f6f8fa;
+  border-color: #0366d6;
+  color: #0366d6;
+}
+
+.vote-btn.upvote.voted {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+}
+
+.vote-btn.downvote.voted {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}
+
+.vote-count {
+  font-weight: 600;
+  color: #333;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Comments Info */
+.comments-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.comments-icon {
+  font-size: 1rem;
+}
+
+.comments-count {
+  font-weight: 600;
+}
+
+.comments-label {
+  color: #999;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #666;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  margin: 0 0 2rem 0;
+  color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .rate-portfolio-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .portfolio-header h1 {
+    font-size: 2rem;
+  }
+
+  .portfolio-tabs {
+    gap: 5px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    justify-content: flex-start;
+  }
+
+  .portfolio-tabs .tab {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .portfolio-thumbnail {
+    height: 180px;
+  }
+
+  .performance-text {
+    font-size: 1.5rem;
+  }
+
+  .portfolio-info {
+    padding: 1rem;
+  }
+
+  .portfolio-title-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .category-tag {
+    align-self: flex-start;
+  }
+
+  .portfolio-stats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .upload-section {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+  }
+
+  .upload-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .portfolio-header .tagline {
+    font-size: 1rem;
+  }
+
+  .performance-text {
+    font-size: 1.25rem;
+  }
+
+  .vote-btn {
+    padding: 4px 6px;
+    min-width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+}

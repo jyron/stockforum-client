@@ -25,6 +25,7 @@ const Navbar = () => {
         </Link>
         <div className="navbar-menu">
           <Link to="/">Home</Link>
+          <Link to="/rate-my-portfolio">Rate My Portfolio</Link>
           {isAuthenticated() ? (
             <>
               <Link to="/profile">Profile</Link>
