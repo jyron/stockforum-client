@@ -134,6 +134,7 @@ export const getPortfolioComments = async (id) => {
 
 // Create a comment on a portfolio
 export const createPortfolioComment = async (data) => {
+  console.log("data", data);
   try {
     const { portfolioId, ...commentData } = data;
     const res = await api.post(

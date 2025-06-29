@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import // Portfolio comment voting and deletion functions to be implemented in a later task
 "../services/portfolioService";
 import ReplyForm from "./ReplyForm";
+import PortfolioCommentForm from "./PortfolioCommentForm";
 import "./Comment.css";
 
 const PortfolioComment = ({
@@ -143,7 +144,7 @@ const PortfolioComment = ({
 
       {showReplyForm && (
         <div className="reply-form-container">
-          <ReplyForm
+          <PortfolioCommentForm
             portfolioId={portfolioId}
             parentCommentId={comment._id}
             onSubmit={() => {
