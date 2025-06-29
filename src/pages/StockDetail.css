@@ -111,3 +111,15 @@
 .show-more-btn:hover {
   color: #0056b3;
 }
+
+.vote-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vote-count {
+  min-width: 24px;
+  text-align: center;
+  font-weight: bold;
+}
