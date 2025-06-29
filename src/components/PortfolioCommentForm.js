@@ -3,7 +3,7 @@ import { createPortfolioComment } from "../services/portfolioService";
 import { useAuth } from "../context/AuthContext";
 import "./Comment.css";
 
-const PortfolioCommentForm = ({ portfolioId, onSubmit }) => {
+const PortfolioCommentForm = ({ portfolioId, onSubmit, parentCommentId }) => {
   const [content, setContent] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -27,11 +27,15 @@ const PortfolioCommentForm = ({ portfolioId, onSubmit }) => {
     setError("");
 
     try {
-      const result = await createPortfolioComment({
+      const payload = {
         content: content.trim(),
         portfolioId,
         isAnonymous: !isAuthenticated() || isAnonymous,
-      });
+      };
+      if (parentCommentId) {
+        payload.parentCommentId = parentCommentId;
+      }
+      const result = await createPortfolioComment(payload);
 
       if (result.success) {
         setContent("");
