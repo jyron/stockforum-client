@@ -10,7 +10,8 @@
   margin: var(--space-6) 0;
   border: 1px solid var(--color-border);
   width: 100%;
-  max-width: none;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .table-header-info {
@@ -52,6 +53,8 @@
   padding: var(--space-4) var(--space-2);
   border-bottom: 1px solid var(--color-border);
   transition: all 0.2s ease;
+  min-width: 0;
+  width: 100%;
 }
 
 .table-row:last-of-type {
