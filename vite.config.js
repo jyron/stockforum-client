@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ command, mode }) => ({
   plugins: [react()],
   resolve: {
     alias: {
@@ -14,13 +14,19 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    ...(command === 'serve' && {
+      proxy: {
+        '/api': {
+          target: 'https://stockforum-server.onrender.com',
+          changeOrigin: true,
+          secure: true,
+          rewrite: (path) => path.replace(/^\/api/, '/api'),
+        },
+      },
+    }),
   },
   build: {
     outDir: 'build',
     sourcemap: true,
   },
-  define: {
-    // Replace CRA's process.env with Vite's import.meta.env
-    'process.env': {},
-  },
-}) 
+})) 

@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
 
       // Open the provider's OAuth popup
       const popupUrl = `${
-        process.env.REACT_APP_API_URL || "http://localhost:5000"
+        import.meta.env.REACT_APP_API_URL || "http://localhost:5000"
       }/api/auth/${provider}`;
       console.log("Opening popup with URL:", popupUrl);
 
@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }) => {
 
           // Get the expected origin from env or default
           const expectedOrigin =
-            process.env.REACT_APP_API_URL || "http://localhost:5000";
+            import.meta.env.REACT_APP_API_URL || "http://localhost:5000";
           const allowedOrigins = [
             expectedOrigin,
             expectedOrigin.replace("http://", "https://"),

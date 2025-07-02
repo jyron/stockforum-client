@@ -44,7 +44,7 @@ const StockChart = ({ symbol }) => {
           `https://financialmodelingprep.com/stable/historical-price-eod/light?symbol=${symbol}&from=${
             startDate.toISOString().split("T")[0]
           }&to=${endDate.toISOString().split("T")[0]}&apikey=${
-            process.env.REACT_APP_FMP_API_URL
+            import.meta.env.REACT_APP_FMP_API_URL
           }`
         );
 

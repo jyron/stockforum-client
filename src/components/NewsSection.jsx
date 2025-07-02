@@ -10,7 +10,7 @@ const NewsSection = () => {
     const fetchNews = async () => {
       try {
         const response = await fetch(
-          `https://financialmodelingprep.com/stable/news/stock-latest?page=0&limit=20&apikey=${process.env.REACT_APP_FMP_API_URL}`
+          `https://financialmodelingprep.com/stable/news/stock-latest?page=0&limit=20&apikey=${import.meta.env.REACT_APP_FMP_API_URL}`
         );
 
         if (!response.ok) {
