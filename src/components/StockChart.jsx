@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
   Filler,
-} from "chart.js";
+} from 'chart';
 import "./StockChart.css";
 
 // Register Chart.js components
