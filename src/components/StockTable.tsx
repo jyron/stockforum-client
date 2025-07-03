@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 import "./StockTable.css";
 import { Link } from "react-router-dom";
@@ -206,7 +206,7 @@ const StockTable = ({
 
             <div className="pagination-numbers">
               {getPageNumbers().map((page, index) => (
-                <React.Fragment key={index}>
+                <Fragment key={index}>
                   {page === "..." ? (
                     <span className="pagination-ellipsis">...</span>
                   ) : (
@@ -219,7 +219,7 @@ const StockTable = ({
                       {page}
                     </button>
                   )}
-                </React.Fragment>
+                </Fragment>
               ))}
             </div>
 
