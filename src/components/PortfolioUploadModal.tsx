@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 import "../styles/components.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import { createPortfolio } from "../services/portfolioService";
 
