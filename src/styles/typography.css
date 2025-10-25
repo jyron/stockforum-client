@@ -139,27 +139,9 @@ p {
 .text-secondary {
   color: var(--color-text-secondary);
 }
-.text-tertiary {
-  color: var(--color-text-tertiary);
-}
-.text-accent {
-  color: var(--color-accent);
-}
-.text-success {
-  color: var(--color-success);
-}
-.text-warning {
-  color: var(--color-warning);
-}
 
-.text-xs {
-  font-size: var(--text-xs);
-}
 .text-sm {
   font-size: var(--text-sm);
-}
-.text-base {
-  font-size: var(--text-base);
 }
 .text-lg {
   font-size: var(--text-lg);
@@ -167,37 +149,9 @@ p {
 .text-xl {
   font-size: var(--text-xl);
 }
-.text-2xl {
-  font-size: var(--text-2xl);
-}
-.text-3xl {
-  font-size: var(--text-3xl);
-}
-.text-4xl {
-  font-size: var(--text-4xl);
-}
 
-.font-normal {
-  font-weight: var(--font-normal);
-}
-.font-medium {
-  font-weight: var(--font-medium);
-}
 .font-semibold {
   font-weight: var(--font-semibold);
-}
-.font-bold {
-  font-weight: var(--font-bold);
-}
-
-.leading-tight {
-  line-height: var(--leading-tight);
-}
-.leading-normal {
-  line-height: var(--leading-normal);
-}
-.leading-relaxed {
-  line-height: var(--leading-relaxed);
 }
 
 /* Links */
@@ -240,31 +194,6 @@ select {
 }
 
 /* Spacing Utilities */
-.space-y-1 > * + * {
-  margin-top: var(--space-1);
-}
-.space-y-2 > * + * {
-  margin-top: var(--space-2);
-}
-.space-y-3 > * + * {
-  margin-top: var(--space-3);
-}
-.space-y-4 > * + * {
-  margin-top: var(--space-4);
-}
-.space-y-5 > * + * {
-  margin-top: var(--space-5);
-}
-.space-y-6 > * + * {
-  margin-top: var(--space-6);
-}
-.space-y-8 > * + * {
-  margin-top: var(--space-8);
-}
-
-.mb-1 {
-  margin-bottom: var(--space-1);
-}
 .mb-2 {
   margin-bottom: var(--space-2);
 }
@@ -274,34 +203,10 @@ select {
 .mb-4 {
   margin-bottom: var(--space-4);
 }
-.mb-5 {
-  margin-bottom: var(--space-5);
-}
 .mb-6 {
   margin-bottom: var(--space-6);
 }
-.mb-8 {
-  margin-bottom: var(--space-8);
-}
 
-.mt-1 {
-  margin-top: var(--space-1);
-}
-.mt-2 {
-  margin-top: var(--space-2);
-}
 .mt-3 {
   margin-top: var(--space-3);
-}
-.mt-4 {
-  margin-top: var(--space-4);
-}
-.mt-5 {
-  margin-top: var(--space-5);
-}
-.mt-6 {
-  margin-top: var(--space-6);
-}
-.mt-8 {
-  margin-top: var(--space-8);
 }
