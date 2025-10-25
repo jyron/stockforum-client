@@ -1,70 +1,181 @@
-# Getting Started with Create React App
+# Stock Forum Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React-based frontend for the Stock Forum application with modern UI and real-time data visualization.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+- **React 19** with modern hooks
+- **React Router** for navigation
+- **Axios** for API integration
+- **Chart.js** for stock data visualization
+- **JWT Authentication** with Google OAuth
+- **Responsive Design** for mobile and desktop
+- **Real-time Updates** with hot reload
+- **Netlify Deployment** ready
+
+## 📁 Project Structure
+
+```
+client/
+├── src/
+│   ├── components/         # Reusable React components
+│   ├── pages/             # Page components
+│   ├── services/          # API service layer
+│   ├── context/           # React context (Auth, etc.)
+│   ├── styles/            # CSS files
+│   └── App.js             # Main app component
+├── public/                # Static assets
+├── docs/                  # Documentation
+└── package.json          # Dependencies
+```
+
+## 🛠️ Local Development
+
+**See the comprehensive guide**: [LOCAL_DEVELOPMENT.md](../LOCAL_DEVELOPMENT.md) in the project root.
+
+Quick start:
+
+```bash
+# Install dependencies
+npm install
+
+# Set up environment
+cp .env.example .env
+# Edit .env: REACT_APP_API_URL=http://localhost:3000
+
+# Start development server
+npm start
+```
+
+Opens automatically at `http://localhost:3001`
+
+## 📦 Deployment
+
+**See**: [docs/deployment.md](./docs/deployment.md) for Netlify deployment guide.
+
+Quick start:
+
+1. Connect GitHub repo to Netlify
+2. Set build command: `npm run build`
+3. Set publish directory: `build`
+4. Add environment variable: `REACT_APP_API_URL=https://your-vercel-api.vercel.app`
+5. Deploy
+
+## 🔑 Environment Variables
+
+See [docs/environment.md](./docs/environment.md) for detailed configuration.
+
+Required variable:
+
+```bash
+REACT_APP_API_URL=http://localhost:3000  # Local
+# or
+REACT_APP_API_URL=https://your-api.vercel.app  # Production
+```
+
+## 🧪 Available Scripts
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs development server at `http://localhost:3001`
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Creates optimized production build in `build/` folder
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `npm test`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Launches test runner
 
-### `npm run eject`
+## 📚 Documentation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **[Local Development](../LOCAL_DEVELOPMENT.md)** - Full development setup
+- **[Environment Setup](./docs/environment.md)** - Configure environment variables
+- **[Deployment Guide](./docs/deployment.md)** - Deploy to Netlify
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🔗 API Integration
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The frontend connects to the backend API via `src/services/api.js`:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```javascript
+// Configured via environment variable
+baseURL: process.env.REACT_APP_API_URL;
+```
 
-## Learn More
+All API calls go through service files in `src/services/`:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- `stockService.js` - Stock operations
+- `commentService.js` - Comments
+- `conversationService.js` - Conversations
+- `portfolioService.js` - Portfolio posts
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🎨 Key Components
 
-### Code Splitting
+### Pages
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- `Home.js` - Landing page with stock list
+- `StockDetail.js` - Individual stock view
+- `Articles.js` - Articles list
+- `RateMyPortfolio.js` - Portfolio rating feature
+- `Profile.js` - User profile
 
-### Analyzing the Bundle Size
+### Components
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- `StockCard.js` - Stock display card
+- `StockChart.js` - Price chart visualization
+- `Navbar.js` - Navigation bar
+- `AuthModal.js` - Login/register modal
+- `Comment.js` - Comment display
 
-### Making a Progressive Web App
+## 🔐 Authentication
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Authentication state managed via `src/context/AuthContext.js`:
 
-### Advanced Configuration
+- JWT token stored in localStorage
+- Token automatically added to API requests
+- Auto-logout on token expiration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🎯 Development Workflow
 
-### Deployment
+1. **Make changes** to components
+2. **Browser auto-refreshes** - see changes instantly
+3. **Check browser console** for errors
+4. **Test API calls** in Network tab
+5. **Build** before deploying: `npm run build`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 📊 Visualization Libraries
 
-### `npm run build` fails to minify
+- **Chart.js** - Stock price charts
+- **D3.js** - Advanced data visualization
+- **Observable Plot** - Statistical plots
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🐛 Troubleshooting
+
+### Can't reach API
+
+- Check `REACT_APP_API_URL` in `.env`
+- Verify backend is running
+- Check CORS configuration in backend
+
+### Build errors
+
+- Run `npm run build` locally first
+- Check all imports are correct
+- Verify all dependencies are installed
+
+### Page not found on refresh
+
+- Ensure `netlify.toml` has SPA redirect rules
+- Check router configuration
+
+## 📝 License
+
+[Add your license here]
+
+## 🤝 Contributing
+
+[Add contribution guidelines here]
+
+---
+
+**Note**: This frontend connects to the serverless API deployed on Vercel. See the backend README for API documentation.
