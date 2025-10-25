@@ -63,7 +63,7 @@ function App() {
         <Navbar />
         <StockBanner stocks={stocks} />
         <main className="container">
-          <Suspense fallback={<div className="loading">Loading...</div>}>
+          <Suspense fallback={<div className="loading">Loading....</div>}>
             <Routes>
               <Route
                 path="/"
