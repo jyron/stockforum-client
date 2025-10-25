@@ -17,13 +17,6 @@
   --anonymous-badge-text: #fff;
 }
 
-.comment-section {
-  max-width: 800px;
-  margin: 20px auto;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-}
-
 .comment {
   background: var(--comment-bg);
   border: 1px solid var(--comment-border);
